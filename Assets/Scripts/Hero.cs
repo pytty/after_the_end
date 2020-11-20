@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class Hero
 {
-    public class Genes {
+    public class Genes
+    {
         public string name;
         public int rollD;
         public int constantBonus;
@@ -19,10 +20,11 @@ public class Hero
         }
     };
 
-    public enum Stat { STR, AGI, WILL}
+    public enum Stat { STR, AGI, WILL }
 
     public string name;
     public Background background;
+    public int maxLevel = 50;
     public int level;
     public Dictionary<Stat, int> rolledStats = new Dictionary<Stat, int>(); //TO DO: final/const etc
     public Dictionary<Stat, int> baseStats = new Dictionary<Stat, int>();
@@ -33,7 +35,7 @@ public class Hero
     public int maxActionPoints;
     public int movementInitiativeBonus;
     public int dodge;
-    
+
     public Dictionary<Stat, int> statDamageBonuses = new Dictionary<Stat, int>();
     public Dictionary<Stat, int> statGainChecks = new Dictionary<Stat, int>();
 
@@ -50,7 +52,7 @@ public class Hero
     {
         this.name = name;
         this.background = background;
-        this.level = level;
+        this.level = (level < maxLevel) ? level : maxLevel;
     }
 
     public void GenerateHero(Genes genes)
@@ -85,7 +87,8 @@ public class Hero
         foreach (KeyValuePair<Stat, int> bs in baseStats)
         {
             Stat increasingStat = IncreasingStat(bs.Key);
-            int bonus = StatBonusFromOtherStat(bs.Value);
+            //Only STR gives bonus
+            int bonus = (bs.Key == Stat.STR) ? StatBonusFromOtherStat(bs.Value) : 0;
             finalStats[increasingStat] = baseStats[increasingStat] + bonus;
         }
 
@@ -156,17 +159,17 @@ public class Hero
     {
         float val =
             (
-                (float)finalStats[Stat.STR] * 3.0f +
-                (float)finalStats[Stat.WILL] * 2.0f +
-                (float)finalStats[Stat.AGI] * 1.0f
+                (float)finalStats[Stat.STR] * 3.5f +
+                (float)finalStats[Stat.WILL] * 1.875f +
+                (float)finalStats[Stat.AGI] * 0.625f
             ) * 1.5f;
         return val;
     }
 
     private float CalculateCombatSpeed()
     {
-        float val = 
-            (float)finalStats[Stat.AGI] * 1.25f + 
+        float val =
+            (float)finalStats[Stat.AGI] * 1.25f +
             (float)finalStats[Stat.WILL] * 0.75f;
         return val;
     }
@@ -174,63 +177,51 @@ public class Hero
     private int CalculateMaxActionPoints()
     {
         int val = 1;
-        if (combatSpeed > 2)
-            val = 2;
-        if (combatSpeed > 5)
-            val = 4;
         if (combatSpeed > 8)
-            val = 6;
-        if (combatSpeed > 11)
-            val = 8;
+            val = 2;
         if (combatSpeed > 14)
-            val = 10;
+            val = 3;
         if (combatSpeed > 17)
-            val = 11;
+            val = 4;
         if (combatSpeed > 20)
-            val = 12;
+            val = 5;
         if (combatSpeed > 23)
-            val = 14;
+            val = 6;
         if (combatSpeed > 26)
-            val = 15;
+            val = 7;
         if (combatSpeed > 29)
-            val = 16;
-        if (combatSpeed > 32)
-            val = 17;
+            val = 8;
         if (combatSpeed > 35)
-            val = 18;
-        if (combatSpeed > 38)
-            val = 19;
+            val = 9;
         if (combatSpeed > 41)
-            val = 20;
+            val = 10;
         if (combatSpeed > 44)
-            val = 21;
+            val = 11;
         if (combatSpeed > 47)
-            val = 22;
-        if (combatSpeed > 50)
-            val = 23;
-        if (combatSpeed > 53)
-            val = 24;
-        if (combatSpeed > 56)
-            val = 25;
+            val = 12;
         return val;
     }
 
     private int CalculateMovementInitiativeBonus()
     {
-        int val = 2;
-        if (finalStats[Stat.AGI] > 5)
+        int val = 1;
+        if (combatSpeed > 11)
+            val = 2;
+        if (combatSpeed > 20)
             val = 3;
-        if (finalStats[Stat.AGI] > 10)
+        if (combatSpeed > 26)
             val = 4;
-        if (finalStats[Stat.AGI] > 15)
+        if (combatSpeed > 32)
+            val = 5;
+        if (combatSpeed > 38)
             val = 6;
-        if (finalStats[Stat.AGI] > 20)
+        if (combatSpeed > 44)
+            val = 7;
+        if (combatSpeed > 50)
             val = 8;
-        if (finalStats[Stat.AGI] > 25)
-            val = 10;
         return val;
     }
-    
+
     private int CalculateDodge()
     {
         int val = 0;
@@ -375,10 +366,28 @@ public class Hero
 
     private float CalculateMelee()
     {
-        float melee = 
-            (float)finalStats[Stat.STR] * 1.75f + 
-            (float)finalStats[Stat.AGI] * 1.75f + 
-            (float)finalStats[Stat.WILL] * 2.0f;
+        float melee =
+            (float)finalStats[Stat.STR] * 1.25f +
+            (float)finalStats[Stat.AGI] * 1.25f +
+            (float)finalStats[Stat.WILL] * 1.5f;
         return melee;
+    }
+
+    public string StatDesc(int stat)
+    {
+        string val = "morbid";
+        if (stat > 4)
+            val = "poor";
+        if (stat > 7)
+            val = "average";
+        if (stat > 12)
+            val = "tough";
+        if (stat > 16)
+            val = "Badass";
+        if (stat > 21)
+            val = "Kingpin";
+        if (stat > 25)
+            val = "Divine";
+        return val;
     }
 }

@@ -21,7 +21,9 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         List<string> levels = new List<string>();
-        for (int i = 0; i < 30; i++)
+        //väärin
+        Hero pylly = new Hero();
+        for (int i = 0; i < pylly.maxLevel; i++)
         {
             levels.Add((i + 1).ToString());
         }
