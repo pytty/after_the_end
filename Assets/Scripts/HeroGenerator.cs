@@ -7,25 +7,22 @@ public class HeroGenerator : MonoBehaviour
 {
     public UIManager ui;
 
-    public Hero player;
+    public List<Hero> heroes = new List<Hero>();
     public List<Hero.Genes> genes = new List<Hero.Genes>();
     public List<Background> backgrounds = new List<Background>();
 
     // Start is called before the first frame update
     void Awake()
     {
+        InitializeHeroGenerator();
+    }
+
+    private void InitializeHeroGenerator()
+    {
         //TO DO: fiksumpi implementointi tälle kovakoodaukselle
         genes.Add(new Hero.Genes("Poor", 8, 4));
         genes.Add(new Hero.Genes("Fair", 6, 6));
         genes.Add(new Hero.Genes("Elite", 4, 8));
-
-
-        List<string> genesOptions = new List<string>();
-        foreach (Hero.Genes g in genes)
-        {
-            genesOptions.Add(g.name + " (d" + g.rollD + "+" + g.constantBonus + ")");
-        }
-        ui.genesSelect.AddOptions(genesOptions);
 
         backgrounds.Add(new Background(
             "Bandit",
@@ -80,24 +77,35 @@ public class HeroGenerator : MonoBehaviour
             "retreated to the wilderness to understand its psychic nature that so strongly attracts you."
             ));
 
-        List<string> backgroundOptions = new List<string>();
-        foreach (Background b in backgrounds)
+        if (ui != null)
         {
-            string text = b.name + " ( ";
-            foreach (Hero.Stat s in b.specialities)
+            List<string> genesOptions = new List<string>();
+            foreach (Hero.Genes g in genes)
             {
-                text += s.ToString() + " ";
+                genesOptions.Add(g.name + " (d" + g.rollD + "+" + g.constantBonus + ")");
             }
-            text += ")";
-            backgroundOptions.Add(text);
+            ui.genesSelect.AddOptions(genesOptions);
+
+            List<string> backgroundOptions = new List<string>();
+            foreach (Background b in backgrounds)
+            {
+                string text = b.name + " ( ";
+                foreach (Hero.Stat s in b.specialities)
+                {
+                    text += s.ToString() + " ";
+                }
+                text += ")";
+                backgroundOptions.Add(text);
+            }
+            ui.backgroundSelect.AddOptions(backgroundOptions);
         }
-        ui.backgroundSelect.AddOptions(backgroundOptions);
     }
 
     public Hero CreateNewHero(string name, Background background, int level, Hero.Genes genes)
     {
         Hero hero = new Hero(name, background, level);
         hero.GenerateHero(genes);
+        heroes.Add(hero);
         return hero;
     }
 }

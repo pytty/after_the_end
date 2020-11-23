@@ -58,7 +58,9 @@ public class UIManager : MonoBehaviour
             newHeroBackground = generator.backgrounds[0];
         if (newHeroGenes == null)
             newHeroGenes = generator.genes[0];
-        if (newHeroLevel <= 0 || newHeroLevel >= 100)
+        //väärin
+        Hero pylly = new Hero();
+        if (newHeroLevel <= 0 || newHeroLevel > pylly.maxLevel)
             newHeroLevel = 1;
 
         sheet.hero = generator.CreateNewHero(newHeroName, newHeroBackground, newHeroLevel, newHeroGenes);

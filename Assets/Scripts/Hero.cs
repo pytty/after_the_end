@@ -24,7 +24,7 @@ public class Hero
 
     public string name;
     public Background background;
-    public int maxLevel = 50;
+    public int maxLevel = 50; //make const
     public int level;
     public Dictionary<Stat, int> rolledStats = new Dictionary<Stat, int>(); //TO DO: final/const etc
     public Dictionary<Stat, int> baseStats = new Dictionary<Stat, int>();
@@ -68,6 +68,12 @@ public class Hero
             statDamageBonuses[s] = 0;
             statGainChecks[s] = 0;
         }
+
+        //level boundaries
+        if (level <= 0)
+            level = 1;
+        else if (level > maxLevel)
+            level = maxLevel;
 
         //Level Bonuses for stats
         if (level > 1)
