@@ -12,11 +12,13 @@ public class UIManager : MonoBehaviour
     public TMP_Dropdown genesSelect;
     public TMP_Dropdown backgroundSelect;
     public TMP_Dropdown levelSelect;
+    public TMP_Dropdown teamSelect;
     public TMP_Text exportPopUpText;
     public string newHeroName;
     public int newHeroLevel;
     public Hero.Genes newHeroGenes;
     public Background newHeroBackground;
+    public int newHeroTeam;
 
     private void Awake()
     {
@@ -50,6 +52,11 @@ public class UIManager : MonoBehaviour
         newHeroLevel = val + 1;
     }
 
+    public void SetNewHeroTeam(int val)
+    {
+        newHeroTeam = val + 1;
+    }
+
     public void CreateHero()
     {
         if (newHeroName == null || newHeroName == "")
@@ -58,12 +65,17 @@ public class UIManager : MonoBehaviour
             newHeroBackground = generator.backgrounds[0];
         if (newHeroGenes == null)
             newHeroGenes = generator.genes[0];
+        if (newHeroTeam < 1)
+            newHeroTeam = 1;
+        else if (newHeroTeam > 2)
+            newHeroTeam = 2;
         //väärin
         Hero pylly = new Hero();
         if (newHeroLevel <= 0 || newHeroLevel > pylly.maxLevel)
             newHeroLevel = 1;
 
         sheet.hero = generator.CreateNewHero(newHeroName, newHeroBackground, newHeroLevel, newHeroGenes);
+        sheet.hero.team = newHeroTeam;
         sheet.PrintCharacterSheet();
     }
 

@@ -23,6 +23,7 @@ using UnityEngine;
     public enum Stat { STR, AGI, WILL }
 
     public string name;
+    public int team;
     public Background background;
     public int maxLevel = 50; //make const
     public int level;

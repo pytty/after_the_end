@@ -43,17 +43,16 @@ public class HeroGenerator : MonoBehaviour
                 backgroundOptions.Add(text);
             }
             ui.backgroundSelect.AddOptions(backgroundOptions);
-        }
-        else
-        {
-            //paskaa kovakoodausta
-            Hero newHero = CreateNewHero(newHeroName, backgrounds[newHeroBackground], newHeroLevel, genes[newHeroGenes]);
 
-            GameObject piece = Instantiate(piecePrefab);
-            piece.GetComponent<Piece>().hero = newHero;
-
-            sheet.hero = newHero;
-            sheet.PrintCharacterSheet();
+            if (ui.teamSelect != null)
+            {
+                List<string> teamOptions = new List<string>();
+                for (int i = 0; i < 2; i++)
+                {
+                    teamOptions.Add((i + 1).ToString());
+                }
+                ui.teamSelect.AddOptions(teamOptions);
+            }
         }
     }
 
@@ -122,6 +121,8 @@ public class HeroGenerator : MonoBehaviour
     {
         Hero hero = new Hero(name, background, level);
         hero.GenerateHero(genes);
+        GameObject piece = Instantiate(piecePrefab);
+        piece.GetComponent<Piece>().hero = hero;
         return hero;
     }
 }
