@@ -6,15 +6,49 @@ using UnityEngine;
 public class HeroGenerator : MonoBehaviour
 {
     public UIManager ui;
+    public UICharacterSheet sheet;
 
     public List<Hero> heroes = new List<Hero>();
     public List<Hero.Genes> genes = new List<Hero.Genes>();
     public List<Background> backgrounds = new List<Background>();
 
+    public string newHeroName;
+    public int newHeroBackground;
+    public int newHeroLevel;
+    public int newHeroGenes;
+
     // Start is called before the first frame update
     void Awake()
     {
         InitializeHeroGenerator();
+        if (ui != null)
+        {
+            List<string> genesOptions = new List<string>();
+            foreach (Hero.Genes g in genes)
+            {
+                genesOptions.Add(g.name + " (d" + g.rollD + "+" + g.constantBonus + ")");
+            }
+            ui.genesSelect.AddOptions(genesOptions);
+
+            List<string> backgroundOptions = new List<string>();
+            foreach (Background b in backgrounds)
+            {
+                string text = b.name + " ( ";
+                foreach (Hero.Stat s in b.specialities)
+                {
+                    text += s.ToString() + " ";
+                }
+                text += ")";
+                backgroundOptions.Add(text);
+            }
+            ui.backgroundSelect.AddOptions(backgroundOptions);
+        }
+        else
+        {
+            //paskaa kovakoodausta
+            sheet.hero = CreateNewHero(newHeroName, backgrounds[newHeroBackground], newHeroLevel, genes[newHeroGenes]);
+            sheet.PrintCharacterSheet();
+        }
     }
 
     private void InitializeHeroGenerator()
@@ -76,29 +110,6 @@ public class HeroGenerator : MonoBehaviour
             "ambition to understand the world has driven you into madness. Dark have your paths been. You " +
             "retreated to the wilderness to understand its psychic nature that so strongly attracts you."
             ));
-
-        if (ui != null)
-        {
-            List<string> genesOptions = new List<string>();
-            foreach (Hero.Genes g in genes)
-            {
-                genesOptions.Add(g.name + " (d" + g.rollD + "+" + g.constantBonus + ")");
-            }
-            ui.genesSelect.AddOptions(genesOptions);
-
-            List<string> backgroundOptions = new List<string>();
-            foreach (Background b in backgrounds)
-            {
-                string text = b.name + " ( ";
-                foreach (Hero.Stat s in b.specialities)
-                {
-                    text += s.ToString() + " ";
-                }
-                text += ")";
-                backgroundOptions.Add(text);
-            }
-            ui.backgroundSelect.AddOptions(backgroundOptions);
-        }
     }
 
     public Hero CreateNewHero(string name, Background background, int level, Hero.Genes genes)

@@ -784,7 +784,24 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\nHP:\n\rCombat Speed: \r\nMovement Initiative Bonus:\r\nAction Points:\r\n\nSKILLS:\nDodge:\t\t%\r\nMelee:\t\t%\r"
+  m_text: '
+
+    HP: 88
+
+    Combat Speed: 21
+
+    Movement Initiative Bonus:
+    3
+
+    Action Points: 5
+
+    
+
+    SKILLS:
+
+    Dodge: 15%
+
+    Melee: 40%'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2660,7 +2677,7 @@ RectTransform:
   - {fileID: 638586656}
   - {fileID: 899858616}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3486,7 +3503,7 @@ Transform:
   - {fileID: 36105888}
   - {fileID: 1754702509}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &899858615
 GameObject:
@@ -3540,7 +3557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterSheetColumnA: {fileID: 1133973699}
   characterSheetColumnB: {fileID: 281640184}
-  viewPort: 1
+  viewPort: 2
 --- !u!1 &901013148 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5648857282026296870, guid: 7517fb232cd9a124e897bf6ab7d617b6, type: 3}
@@ -3618,7 +3635,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &912592776 stripped
 GameObject:
@@ -3913,7 +3930,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1103666864
 MonoBehaviour:
@@ -3985,7 +4002,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Hero\nName: Ulag\t\t\r\nLevel: 15\n\r\nSTR\t17\texcellent\t55%\t\t\r\nAGI\t15\tpoor\t\t55%\nWILL\t18\tnice\t\t60%"
+  m_text: "Hero\r\nName: Jyrgen\r\nBackground: Village Leader\r\nLevel: 2\r\n\r\nStat    
+    \tDesc.      \tCheck\r\nSTR 9 \taverage \t35%\r\nAGI 10 \taverage \t35%\r\nWILL
+    11 \taverage \t40%\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4350,7 +4369,7 @@ Transform:
   m_Children:
   - {fileID: 688041450}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1228261958
 PrefabInstance:
@@ -4557,7 +4576,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1247841811 stripped
 GameObject:
@@ -4783,6 +4802,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5648857282026296874, guid: 7517fb232cd9a124e897bf6ab7d617b6, type: 3}
   m_PrefabInstance: {fileID: 1281645218}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1383542150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1383542153}
+  - component: {fileID: 1383542152}
+  m_Layer: 0
+  m_Name: HeroGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1383542152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383542150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1752466257686c94897b4e5473f30635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ui: {fileID: 0}
+  sheet: {fileID: 899858617}
+  newHeroName: Jyrgen
+  newHeroBackground: 2
+  newHeroLevel: 2
+  newHeroGenes: 2
+--- !u!4 &1383542153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383542150}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1391747729
 PrefabInstance:
   m_ObjectHideFlags: 0
