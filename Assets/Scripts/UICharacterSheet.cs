@@ -71,10 +71,10 @@ public class UICharacterSheet : MonoBehaviour
 
             characterSheetColumnB.text =
                 "\n" +
-                "HP: " + Mathf.Round(hero.maxHP) + "\n" +
+                "HP: " + Mathf.Round(hero.currentHP) + " / " + Mathf.Round(hero.maxHP) + "\n" +
                 "Combat Speed: " + Mathf.Round(hero.combatSpeed) + "\n" +
                 "Movement Initiative Bonus: " + hero.movementInitiativeBonus + "\n" +
-                "Action Points: " + hero.maxActionPoints + "\n" +
+                "Action Points: " + hero.currentActionPoints + " / " + hero.maxActionPoints + "\n" +
                 "\n" +
                 "SKILLS:\n" +
                 "Dodge: " + hero.dodge + "%\n" +

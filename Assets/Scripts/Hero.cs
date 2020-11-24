@@ -31,8 +31,10 @@ public class Hero
     public Dictionary<Stat, int> finalStats = new Dictionary<Stat, int>();
 
     public float maxHP; //TO DO: pyöristys? onko float vai int?
+    public float currentHP;
     public float combatSpeed; //TO DO: pyöristys? onko float vai int?
     public int maxActionPoints;
+    public int currentActionPoints;
     public int movementInitiativeBonus;
     public int dodge;
 
@@ -100,8 +102,10 @@ public class Hero
 
         //derived stats
         maxHP = CalculateMaxHP();
+        currentHP = maxHP;
         combatSpeed = CalculateCombatSpeed();
         maxActionPoints = CalculateMaxActionPoints();
+        currentActionPoints = maxActionPoints;
         movementInitiativeBonus = CalculateMovementInitiativeBonus();
 
         //dodge
