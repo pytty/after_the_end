@@ -117,12 +117,21 @@ public class HeroGenerator : MonoBehaviour
             ));
     }
 
-    public Hero CreateNewHero(string name, Background background, int level, Hero.Genes genes)
+    public Hero CreateNewHero(string name, Background background, int level, Hero.Genes genes, int team)
     {
         Hero hero = new Hero(name, background, level);
         hero.GenerateHero(genes);
+        hero.team = team;
         GameObject piece = Instantiate(piecePrefab);
         piece.GetComponent<Piece>().hero = hero;
+
+        Color teamColor = Color.blue;
+        if (hero.team == 1)
+            teamColor = Color.blue;
+        else if (hero.team == 2)
+            teamColor = Color.red;
+        piece.GetComponent<Renderer>().material.SetColor("_Color", teamColor);
+
         return hero;
     }
 }

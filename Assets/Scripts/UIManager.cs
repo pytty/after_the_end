@@ -74,8 +74,7 @@ public class UIManager : MonoBehaviour
         if (newHeroLevel <= 0 || newHeroLevel > pylly.maxLevel)
             newHeroLevel = 1;
 
-        sheet.hero = generator.CreateNewHero(newHeroName, newHeroBackground, newHeroLevel, newHeroGenes);
-        sheet.hero.team = newHeroTeam;
+        sheet.hero = generator.CreateNewHero(newHeroName, newHeroBackground, newHeroLevel, newHeroGenes, newHeroTeam);
         sheet.PrintCharacterSheet();
     }
 
