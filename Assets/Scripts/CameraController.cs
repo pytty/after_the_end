@@ -39,10 +39,9 @@ public class CameraController : MonoBehaviour
         float speed = 10.0f;
 
         float tiltAroundY = Input.GetAxis("Mouse X") * speed;
-        //float tiltAroundX = Input.GetAxis("Mouse Y") * -speed;
+        float tiltAroundX = Input.GetAxis("Mouse Y") * -speed;
         // Do I have to use time.deltatime
-        transform.Rotate(0, tiltAroundY, 0);
-        //transform.Rotate(tiltAroundX, tiltAroundY, 0);
+        transform.localEulerAngles += new Vector3(tiltAroundX, tiltAroundY);
     }
     private void PanCamera()
     {
