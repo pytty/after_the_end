@@ -44,6 +44,8 @@ using UnityEngine;
 
     public float melee; //TO DO: pyöristys? onko float vai int?
 
+    public string notes;
+
     //TO DO: missä luodaan random instance
     System.Random rand = new System.Random();
 

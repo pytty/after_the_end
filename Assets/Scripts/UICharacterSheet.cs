@@ -12,6 +12,7 @@ public class UICharacterSheet : MonoBehaviour
     public TMP_Text characterSheetColumnB;
     public TMP_InputField hPInput;
     public TMP_InputField aPInput;
+    public TMP_InputField notesInput;
 
     public enum ViewPort { LANDSCAPE, PORTRAIT, HUD}
     public ViewPort viewPort = ViewPort.PORTRAIT;
@@ -84,6 +85,7 @@ public class UICharacterSheet : MonoBehaviour
                 "Melee: " + Mathf.Round(hero.melee) + "%";
             hPInput.text = Mathf.Round(hero.currentHP).ToString();
             aPInput.text = Mathf.Round(hero.currentActionPoints).ToString();
+            notesInput.text = hero.notes;
         }
     }
 

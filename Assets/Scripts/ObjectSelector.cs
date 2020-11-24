@@ -111,4 +111,12 @@ public class ObjectSelector : MonoBehaviour
             sheet.PrintCharacterSheet();
         }
     }
+    public void EditHeroNotes(string notes)
+    {
+        if (selectedGameObject != null)
+        {
+            selectedGameObject.GetComponent<Piece>().hero.notes = notes;
+            sheet.PrintCharacterSheet();
+        }
+    }
 }
