@@ -2150,7 +2150,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 909243389}
         m_TargetAssemblyTypeName: ObjectSelector, Assembly-CSharp
-        m_MethodName: EditHeroHP
+        m_MethodName: EditHeroAP
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
