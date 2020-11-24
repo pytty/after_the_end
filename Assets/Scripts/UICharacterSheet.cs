@@ -8,7 +8,8 @@ using TMPro;
 public class UICharacterSheet : MonoBehaviour
 {
     public Hero hero;
-    public TMP_Text characterSheetText;
+    public TMP_Text characterSheetColumnA;
+    public TMP_Text characterSheetColumnB;
     public enum ViewPort { LANDSCAPE, PORTRAIT, HUD}
     public ViewPort viewPort = ViewPort.PORTRAIT;
 
@@ -32,7 +33,7 @@ public class UICharacterSheet : MonoBehaviour
                 //statGainCheckText += " " + s.ToString() + ": " + hero.statGainChecks[s] + "%";
             }
 
-            characterSheetText.text =
+            characterSheetColumnA.text =
                 "Character Sheet\n" +
                 "\n" +
                 "Name: " + hero.name + "\n" +

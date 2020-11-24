@@ -98,7 +98,7 @@ public class UIManager : MonoBehaviour
                 i++;
             } while (File.Exists(Path.Combine(path, filename)));
 
-            string text = sheet.characterSheetText.text;
+            string text = sheet.characterSheetColumnA.text;
             File.WriteAllText(Path.Combine(path, filename), text);
             exportPopUpText.text = "File created at: " + Path.Combine(path, filename);
         }
