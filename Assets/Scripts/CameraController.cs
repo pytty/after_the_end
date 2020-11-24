@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
 
     private void RotateCamera()
     {
-        float speed = 10.0f;
+        float speed = 8.0f;
 
         float tiltAroundY = Input.GetAxis("Mouse X") * speed;
         float tiltAroundX = Input.GetAxis("Mouse Y") * -speed;
@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour
 
     }
 
-    private void ResetCamera()
+    public void ResetCamera()
     {
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.identity;

@@ -13,12 +13,17 @@ public class UIManager : MonoBehaviour
     public TMP_Dropdown backgroundSelect;
     public TMP_Dropdown levelSelect;
     public TMP_Dropdown teamSelect;
+    public TMP_Dropdown gridWidthSelect;
+    public TMP_Dropdown gridLengthSelect;
     public TMP_Text exportPopUpText;
     public string newHeroName;
     public int newHeroLevel;
     public Hero.Genes newHeroGenes;
     public Background newHeroBackground;
     public int newHeroTeam;
+
+    public int newGridWidth;
+    public int newGridLength;
 
     private void Awake()
     {
@@ -57,6 +62,16 @@ public class UIManager : MonoBehaviour
         newHeroTeam = val + 1;
     }
 
+    public void SetGridWidth(int val)
+    {
+        newGridWidth = val + 1;
+    }
+
+    public void SetGridLength(int val)
+    {
+        newGridLength = val + 1;
+    }
+
     public void CreateHero()
     {
         if (newHeroName == null || newHeroName == "")
@@ -76,6 +91,19 @@ public class UIManager : MonoBehaviour
 
         sheet.hero = generator.CreateNewHero(newHeroName, newHeroBackground, newHeroLevel, newHeroGenes, newHeroTeam);
         sheet.PrintCharacterSheet();
+    }
+
+    public void CreateGrid()
+    {
+        if (newGridWidth < 1)
+            newGridWidth = 1;
+        if (newGridWidth > 64)
+            newGridWidth = 64;
+        if (newGridLength < 1)
+            newGridLength = 1;
+        if (newGridLength > 64)
+            newGridLength = 64;
+        GetComponent<LevelCreator>().CreateGrid(newGridWidth, newGridLength);
     }
 
     public void ExportCharacterSheet()
