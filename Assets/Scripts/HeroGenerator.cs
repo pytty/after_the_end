@@ -8,15 +8,11 @@ public class HeroGenerator : MonoBehaviour
     public UIManager ui;
     public UICharacterSheet sheet;
     public GameObject piecePrefab;
+    public ObjectSelector objSel;
     public List<Piece> heroes = new List<Piece>();
 
     public List<Hero.Genes> genes = new List<Hero.Genes>();
     public List<Background> backgrounds = new List<Background>();
-
-    public string newHeroName;
-    public int newHeroBackground;
-    public int newHeroLevel;
-    public int newHeroGenes;
 
     // Start is called before the first frame update
     void Awake()
@@ -122,15 +118,16 @@ public class HeroGenerator : MonoBehaviour
         Hero hero = new Hero(name, background, level);
         hero.GenerateHero(genes);
         hero.team = team;
-        GameObject piece = Instantiate(piecePrefab);
-        piece.GetComponent<Piece>().hero = hero;
+        GameObject go = Instantiate(piecePrefab);
+        go.GetComponent<Piece>().hero = hero;
 
         Color teamColor = Color.blue;
         if (hero.team == 1)
             teamColor = Color.blue;
         else if (hero.team == 2)
             teamColor = Color.red;
-        piece.GetComponent<Renderer>().material.SetColor("_Color", teamColor);
+        go.GetComponent<Renderer>().material.SetColor("_Color", teamColor);
+        objSel.SelectObject(go);
 
         return hero;
     }

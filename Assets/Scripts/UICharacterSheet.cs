@@ -10,6 +10,9 @@ public class UICharacterSheet : MonoBehaviour
     public Hero hero;
     public TMP_Text characterSheetColumnA;
     public TMP_Text characterSheetColumnB;
+    public TMP_InputField hPInput;
+    public TMP_InputField aPInput;
+
     public enum ViewPort { LANDSCAPE, PORTRAIT, HUD}
     public ViewPort viewPort = ViewPort.PORTRAIT;
 
@@ -71,14 +74,16 @@ public class UICharacterSheet : MonoBehaviour
 
             characterSheetColumnB.text =
                 "\n" +
-                "HP: " + Mathf.Round(hero.currentHP) + " / " + Mathf.Round(hero.maxHP) + "\n" +
+                "HP:    " + Mathf.Round(hero.currentHP) + "    / " + Mathf.Round(hero.maxHP) + "\n" +
                 "Combat Speed: " + Mathf.Round(hero.combatSpeed) + "\n" +
                 "Movement Initiative Bonus: " + hero.movementInitiativeBonus + "\n" +
-                "Action Points: " + hero.currentActionPoints + " / " + hero.maxActionPoints + "\n" +
+                "Action Points:    " + hero.currentActionPoints + "    / " + hero.maxActionPoints + "\n" +
                 "\n" +
                 "SKILLS:\n" +
                 "Dodge: " + hero.dodge + "%\n" +
                 "Melee: " + Mathf.Round(hero.melee) + "%";
+            hPInput.text = Mathf.Round(hero.currentHP).ToString();
+            aPInput.text = Mathf.Round(hero.currentActionPoints).ToString();
         }
     }
 

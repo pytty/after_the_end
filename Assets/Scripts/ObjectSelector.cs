@@ -12,7 +12,7 @@ public class ObjectSelector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        DeselectObject();
     }
 
     // Update is called once per frame
@@ -20,10 +20,14 @@ public class ObjectSelector : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            DeselectObject();
             go = GetClickedObject();
-            if (go != null && go.GetComponent<Piece>() != null)
+            if (go != null && go.GetComponent<Tile>() != null)
+                DeselectObject();
+            else if (go != null && go.GetComponent<Piece>() != null)
+            {
+                DeselectObject();
                 SelectObject(go);
+            }
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -48,16 +52,6 @@ public class ObjectSelector : MonoBehaviour
                 }
             }
         }
-
-        if (selectedGameObject != null)
-        {
-            sheet.hero = selectedGameObject.GetComponent<Piece>().hero;
-            sheet.PrintCharacterSheet();
-        }
-        else
-        {
-            sheet.EmptyCharacterSheet();
-        }
     }
 
     private GameObject GetClickedObject()
@@ -76,7 +70,7 @@ public class ObjectSelector : MonoBehaviour
         return null;
     }
 
-    void SelectObject(GameObject go)
+    public void SelectObject(GameObject go)
     {
         if (selectedGameObject != null)
             DeselectObject();
@@ -84,15 +78,37 @@ public class ObjectSelector : MonoBehaviour
         selectIndicator.transform.parent = go.transform;
         selectIndicator.transform.position = go.transform.position;
         selectIndicator.SetActive(true);
+
+        sheet.gameObject.SetActive(true);
+        sheet.hero = selectedGameObject.GetComponent<Piece>().hero;
+        sheet.PrintCharacterSheet();
     }
 
-    void DeselectObject()
+    public void DeselectObject()
     {
-        if (selectedGameObject)
+        selectIndicator.transform.parent = null;
+        selectIndicator.SetActive(false);
+        selectedGameObject = null;
+
+        sheet.gameObject.SetActive(false);
+        sheet.EmptyCharacterSheet();
+    }
+
+    public void EditHeroHP(string hp)
+    {
+        if (selectedGameObject != null)
         {
-            selectIndicator.transform.parent = null;
-            selectIndicator.SetActive(false);
-            selectedGameObject = null;
+            selectedGameObject.GetComponent<Piece>().hero.currentHP = float.Parse(hp);
+            sheet.PrintCharacterSheet();
+        }
+    }
+
+    public void EditHeroAP(string ap)
+    {
+        if (selectedGameObject != null)
+        {
+            selectedGameObject.GetComponent<Piece>().hero.currentActionPoints = int.Parse(ap);
+            sheet.PrintCharacterSheet();
         }
     }
 }
