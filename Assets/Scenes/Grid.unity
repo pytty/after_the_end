@@ -3556,6 +3556,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ba2bc70feb05442a7d309ac7109c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hero:
+    name: 
+    maxLevel: 50
+    level: 0
+    maxHP: 0
+    currentHP: 0
+    combatSpeed: 0
+    maxActionPoints: 0
+    currentActionPoints: 0
+    movementInitiativeBonus: 0
+    dodge: 0
+    melee: 0
   characterSheetColumnA: {fileID: 1133973699}
   characterSheetColumnB: {fileID: 281640184}
   viewPort: 2
@@ -3624,6 +3636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedGameObject: {fileID: 0}
   selectIndicator: {fileID: 1212598893}
+  sheet: {fileID: 899858617}
 --- !u!4 &909243390
 Transform:
   m_ObjectHideFlags: 0

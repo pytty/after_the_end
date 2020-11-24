@@ -6,6 +6,7 @@ public class ObjectSelector : MonoBehaviour
 {
     public GameObject selectedGameObject;
     public GameObject selectIndicator;
+    public UICharacterSheet sheet;
     private GameObject go;
 
     // Start is called before the first frame update
@@ -46,6 +47,16 @@ public class ObjectSelector : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (selectedGameObject != null)
+        {
+            sheet.hero = selectedGameObject.GetComponent<Piece>().hero;
+            sheet.PrintCharacterSheet();
+        }
+        else
+        {
+            sheet.EmptyCharacterSheet();
         }
     }
 

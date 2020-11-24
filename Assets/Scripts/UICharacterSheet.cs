@@ -81,4 +81,10 @@ public class UICharacterSheet : MonoBehaviour
                 "Melee: " + Mathf.Round(hero.melee) + "%";
         }
     }
+
+    public void EmptyCharacterSheet()
+    {
+        characterSheetColumnA.text = "";
+        characterSheetColumnB.text = "";
+    }
 }
