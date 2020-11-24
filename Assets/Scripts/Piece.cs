@@ -5,7 +5,7 @@ using UnityEngine;
 public class Piece : MonoBehaviour
 {
     public Tile currentTile;
-    public Hero hero;
+    [SerializeField] public Hero hero;
 
     // Start is called before the first frame update
     void Awake()
@@ -15,7 +15,6 @@ public class Piece : MonoBehaviour
             currentTile = FindObjectOfType<Tile>();
         }
         MoveToCurrentTile();
-        hero = new Hero();
     }
 
     // Update is called once per frame

@@ -7,8 +7,9 @@ public class HeroGenerator : MonoBehaviour
 {
     public UIManager ui;
     public UICharacterSheet sheet;
+    public GameObject piecePrefab;
+    public List<Piece> heroes = new List<Piece>();
 
-    public List<Hero> heroes = new List<Hero>();
     public List<Hero.Genes> genes = new List<Hero.Genes>();
     public List<Background> backgrounds = new List<Background>();
 
@@ -46,7 +47,12 @@ public class HeroGenerator : MonoBehaviour
         else
         {
             //paskaa kovakoodausta
-            sheet.hero = CreateNewHero(newHeroName, backgrounds[newHeroBackground], newHeroLevel, genes[newHeroGenes]);
+            Hero newHero = CreateNewHero(newHeroName, backgrounds[newHeroBackground], newHeroLevel, genes[newHeroGenes]);
+
+            GameObject piece = Instantiate(piecePrefab);
+            piece.GetComponent<Piece>().hero = newHero;
+
+            sheet.hero = newHero;
             sheet.PrintCharacterSheet();
         }
     }
@@ -116,7 +122,6 @@ public class HeroGenerator : MonoBehaviour
     {
         Hero hero = new Hero(name, background, level);
         hero.GenerateHero(genes);
-        heroes.Add(hero);
         return hero;
     }
 }
