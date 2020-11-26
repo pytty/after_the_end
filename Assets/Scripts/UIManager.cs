@@ -95,14 +95,6 @@ public class UIManager : MonoBehaviour
 
     public void CreateGrid()
     {
-        if (newGridWidth < 1)
-            newGridWidth = 1;
-        if (newGridWidth > 64)
-            newGridWidth = 64;
-        if (newGridLength < 1)
-            newGridLength = 1;
-        if (newGridLength > 64)
-            newGridLength = 64;
         GetComponent<LevelCreator>().CreateGrid(newGridWidth, newGridLength);
     }
 

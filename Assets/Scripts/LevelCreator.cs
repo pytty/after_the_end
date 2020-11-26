@@ -9,22 +9,39 @@ public class LevelCreator : MonoBehaviour
     public Color darkColor;
     private GameObject tiles;
 
+    public int minSideLength = 1;
+    public int maxSideLength = 64;
+
+    public int standardWidth = 8;
+    public int standardLength = 8;
+
     private void Awake()
     {
         UIManager ui = GetComponent<UIManager>();
         List<string> gridOptions = new List<string>();
-        for (int i = 0; i < 64; i++)
+        for (int i = minSideLength; i <= maxSideLength; i++)
         {
-            gridOptions.Add((i + 1).ToString());
+            gridOptions.Add((i).ToString());
         }
         ui.gridWidthSelect.AddOptions(gridOptions);
-        ui.gridWidthSelect.value = 7;
+        ui.gridWidthSelect.value = standardWidth - 1;
         ui.gridLengthSelect.AddOptions(gridOptions);
-        ui.gridLengthSelect.value = 7;
+        ui.gridLengthSelect.value = standardLength - 1;
+
+        CreateGrid(standardWidth, standardLength);
     }
 
     public void CreateGrid(int gridWidth, int gridLength)
     {
+        if (gridWidth < minSideLength)
+            gridWidth = minSideLength;
+        if (gridWidth > maxSideLength)
+            gridWidth = maxSideLength;
+        if (gridLength < minSideLength)
+            gridLength = minSideLength;
+        if (gridLength > maxSideLength)
+            gridLength = maxSideLength;
+
         GameObject.Destroy(tiles);
         float tileWidth = tilePrefab.transform.localScale.x;
         float tileHeight = tilePrefab.transform.localScale.y;
