@@ -8,9 +8,13 @@ using TMPro;
 public class UICharacterSheet : MonoBehaviour
 {
     public Hero hero;
-    public TMP_Text characterSheetText;
+    public TMP_Text characterSheetColumnA;
+    public TMP_Text characterSheetColumnB;
+    public TMP_InputField hPInput;
+    public TMP_InputField aPInput;
+    public TMP_InputField notesInput;
 
-    public void PrintCharacterSheet()
+    public Dictionary<string, string> GetCharacterSheetTexts()
     {
         string masterStatsText = "Stat     \tDesc.      \tCheck\n";
         string rolledStatsText = "Original Stats:\n";
@@ -27,32 +31,86 @@ public class UICharacterSheet : MonoBehaviour
             //statDamageBonusText += " " + s.ToString() + ": " + hero.statDamageBonuses[s];
             //statGainCheckText += " " + s.ToString() + ": " + hero.statGainChecks[s] + "%";
         }
+        return new Dictionary<string, string>()
+        {
+            {
+                "Print",
+                "Character Sheet\n" +
+                "\n" +
+                "Name: " + hero.name + "\n" +
+                "Background: " + hero.background.name + "\n" +
+                "Level: " + hero.level + "\n" +
+                "\n" +
+                masterStatsText + "\n" +
+                "\n" +
+                rolledStatsText + "\n" +
+                baseStatsText + "\n" +
+                finalStatsText + "\n" +
+                "\n" +
+                "HP: " + Mathf.Round(hero.maxHP) + "\n" +
+                "\n" +
+                "Combat Speed: " + Mathf.Round(hero.combatSpeed) + "\n" +
+                "\n" +
+                "Movement Initiative Bonus: " + hero.movementInitiativeBonus + "\n" +
+                "Action Points: " + hero.maxActionPoints + "\n" +
+                "\n" +
+                "SKILLS:\n" +
+                "Dodge: " + hero.dodge + "%\n" +
+                "Melee: " + Mathf.Round(hero.melee) + "%\n" +
+                "\n" +
+                "Story:\n" +
+                hero.background.description
+            },
+            {
+                "Column A",
+                "Hero\n" +
+                "Name: " + hero.name + "\n" +
+                "Background: " + hero.background.name + "\n" +
+                "Level: " + hero.level + "\n" +
+                "\n" +
+                masterStatsText
+            },
+            {
+                "Column B",
+                "\n" +
+                "HP:    " + Mathf.Round(hero.currentHP) + "    / " + Mathf.Round(hero.maxHP) + "\n" +
+                "Combat Speed: " + Mathf.Round(hero.combatSpeed) + "\n" +
+                "Movement Initiative Bonus: " + hero.movementInitiativeBonus + "\n" +
+                "Action Points:    " + hero.currentActionPoints + "    / " + hero.maxActionPoints + "\n" +
+                "\n" +
+                "SKILLS:\n" +
+                "Dodge: " + hero.dodge + "%\n" +
+                "Melee: " + Mathf.Round(hero.melee) + "%"
+            },
+            {
+                "HP Input",
+                Mathf.Round(hero.currentHP).ToString()
+            },
+            {
+                "AP Input",
+                Mathf.Round(hero.currentActionPoints).ToString()
+            },
+            {
+                "Notes Input",
+                hero.notes
+            }
+        };
+        
+    }
 
-        characterSheetText.text =
-            "Character Sheet\n" +
-            "\n" +
-            "Name: " + hero.name + "\n" +
-            "Background: " + hero.background.name + "\n" +
-            "Level: " + hero.level + "\n" +
-            "\n" +
-            masterStatsText + "\n" +
-            "\n" +
-            rolledStatsText + "\n" +
-            baseStatsText + "\n" +
-            finalStatsText + "\n" +
-            "\n" +
-            "HP: " + Mathf.Round(hero.maxHP) + "\n" +
-            "\n" +
-            "Combat Speed: " + Mathf.Round(hero.combatSpeed) + "\n" +
-            "\n" +
-            "Movement Initiative Bonus: " + hero.movementInitiativeBonus + "\n" +
-            "Action Points: " + hero.maxActionPoints + "\n" +
-            "\n" +
-            "SKILLS:\n" +
-            "Dodge: " + hero.dodge + "%\n" +
-            "Melee: " + Mathf.Round(hero.melee) + "%\n" +
-            "\n" +
-            "Story:\n" +
-            hero.background.description;
+    public void ViewCharacterSheet()
+    {
+        Dictionary<string, string> sheetTexts = GetCharacterSheetTexts();
+        characterSheetColumnA.text = sheetTexts["Column A"];
+        characterSheetColumnB.text = sheetTexts["Column B"];
+        hPInput.text = sheetTexts["HP Input"];
+        aPInput.text = sheetTexts["AP Input"];
+        notesInput.text = sheetTexts["Notes Input"];
+    }
+
+    public void EmptyCharacterSheet()
+    {
+        characterSheetColumnA.text = "";
+        characterSheetColumnB.text = "";
     }
 }

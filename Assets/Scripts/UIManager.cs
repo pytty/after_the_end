@@ -12,11 +12,18 @@ public class UIManager : MonoBehaviour
     public TMP_Dropdown genesSelect;
     public TMP_Dropdown backgroundSelect;
     public TMP_Dropdown levelSelect;
+    public TMP_Dropdown teamSelect;
+    public TMP_Dropdown gridWidthSelect;
+    public TMP_Dropdown gridLengthSelect;
     public TMP_Text exportPopUpText;
     public string newHeroName;
     public int newHeroLevel;
     public Hero.Genes newHeroGenes;
     public Background newHeroBackground;
+    public int newHeroTeam;
+
+    public int newGridWidth;
+    public int newGridLength;
 
     private void Awake()
     {
@@ -50,6 +57,21 @@ public class UIManager : MonoBehaviour
         newHeroLevel = val + 1;
     }
 
+    public void SetNewHeroTeam(int val)
+    {
+        newHeroTeam = val + 1;
+    }
+
+    public void SetGridWidth(int val)
+    {
+        newGridWidth = val + 1;
+    }
+
+    public void SetGridLength(int val)
+    {
+        newGridLength = val + 1;
+    }
+
     public void CreateHero()
     {
         if (newHeroName == null || newHeroName == "")
@@ -58,11 +80,22 @@ public class UIManager : MonoBehaviour
             newHeroBackground = generator.backgrounds[0];
         if (newHeroGenes == null)
             newHeroGenes = generator.genes[0];
-        if (newHeroLevel <= 0 || newHeroLevel >= 100)
+        if (newHeroTeam < 1)
+            newHeroTeam = 1;
+        else if (newHeroTeam > 2)
+            newHeroTeam = 2;
+        //väärin
+        Hero pylly = new Hero();
+        if (newHeroLevel <= 0 || newHeroLevel > pylly.maxLevel)
             newHeroLevel = 1;
 
-        sheet.hero = generator.CreateNewHero(newHeroName, newHeroBackground, newHeroLevel, newHeroGenes);
-        sheet.PrintCharacterSheet();
+        sheet.hero = generator.CreateNewHero(newHeroName, newHeroBackground, newHeroLevel, newHeroGenes, newHeroTeam);
+        sheet.ViewCharacterSheet();
+    }
+
+    public void CreateGrid()
+    {
+        GetComponent<LevelCreator>().CreateGrid(newGridWidth, newGridLength);
     }
 
     public void ExportCharacterSheet()
@@ -96,7 +129,7 @@ public class UIManager : MonoBehaviour
                 i++;
             } while (File.Exists(Path.Combine(path, filename)));
 
-            string text = sheet.characterSheetText.text;
+            string text = sheet.GetCharacterSheetTexts()["Print"];
             File.WriteAllText(Path.Combine(path, filename), text);
             exportPopUpText.text = "File created at: " + Path.Combine(path, filename);
         }

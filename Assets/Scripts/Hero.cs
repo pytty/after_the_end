@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Hero
+[Serializable] public class Hero
 {
     public class Genes
     {
@@ -23,16 +23,19 @@ public class Hero
     public enum Stat { STR, AGI, WILL }
 
     public string name;
+    public int team;
     public Background background;
-    public int maxLevel = 50;
+    public int maxLevel = 50; //make const
     public int level;
     public Dictionary<Stat, int> rolledStats = new Dictionary<Stat, int>(); //TO DO: final/const etc
     public Dictionary<Stat, int> baseStats = new Dictionary<Stat, int>();
     public Dictionary<Stat, int> finalStats = new Dictionary<Stat, int>();
 
     public float maxHP; //TO DO: pyöristys? onko float vai int?
+    public float currentHP;
     public float combatSpeed; //TO DO: pyöristys? onko float vai int?
     public int maxActionPoints;
+    public int currentActionPoints;
     public int movementInitiativeBonus;
     public int dodge;
 
@@ -40,6 +43,8 @@ public class Hero
     public Dictionary<Stat, int> statGainChecks = new Dictionary<Stat, int>();
 
     public float melee; //TO DO: pyöristys? onko float vai int?
+
+    public string notes;
 
     //TO DO: missä luodaan random instance
     System.Random rand = new System.Random();
@@ -69,6 +74,12 @@ public class Hero
             statGainChecks[s] = 0;
         }
 
+        //level boundaries
+        if (level <= 0)
+            level = 1;
+        else if (level > maxLevel)
+            level = maxLevel;
+
         //Level Bonuses for stats
         if (level > 1)
         {
@@ -94,8 +105,10 @@ public class Hero
 
         //derived stats
         maxHP = CalculateMaxHP();
+        currentHP = maxHP;
         combatSpeed = CalculateCombatSpeed();
         maxActionPoints = CalculateMaxActionPoints();
+        currentActionPoints = maxActionPoints;
         movementInitiativeBonus = CalculateMovementInitiativeBonus();
 
         //dodge

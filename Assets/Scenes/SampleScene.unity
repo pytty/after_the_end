@@ -780,7 +780,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 384246384}
   m_HandleRect: {fileID: 384246383}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4480,7 +4480,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ba2bc70feb05442a7d309ac7109c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterSheetText: {fileID: 1392964238}
+  characterSheetColumnA: {fileID: 1392964238}
+  characterSheetColumnB: {fileID: 0}
+  viewPort: 1
 --- !u!114 &1392964238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6519,7 +6521,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1512758148}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.47616243
+  m_Size: 0.47616246
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
