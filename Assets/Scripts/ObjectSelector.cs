@@ -81,7 +81,7 @@ public class ObjectSelector : MonoBehaviour
 
         sheet.gameObject.SetActive(true);
         sheet.hero = selectedGameObject.GetComponent<Piece>().hero;
-        sheet.PrintCharacterSheet();
+        sheet.ViewCharacterSheet();
     }
 
     public void DeselectObject()
@@ -99,7 +99,7 @@ public class ObjectSelector : MonoBehaviour
         if (selectedGameObject != null)
         {
             selectedGameObject.GetComponent<Piece>().hero.currentHP = float.Parse(hp);
-            sheet.PrintCharacterSheet();
+            sheet.ViewCharacterSheet();
         }
     }
 
@@ -108,7 +108,7 @@ public class ObjectSelector : MonoBehaviour
         if (selectedGameObject != null)
         {
             selectedGameObject.GetComponent<Piece>().hero.currentActionPoints = int.Parse(ap);
-            sheet.PrintCharacterSheet();
+            sheet.ViewCharacterSheet();
         }
     }
     public void EditHeroNotes(string notes)
@@ -116,7 +116,7 @@ public class ObjectSelector : MonoBehaviour
         if (selectedGameObject != null)
         {
             selectedGameObject.GetComponent<Piece>().hero.notes = notes;
-            sheet.PrintCharacterSheet();
+            sheet.ViewCharacterSheet();
         }
     }
 }

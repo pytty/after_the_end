@@ -14,10 +14,7 @@ public class UICharacterSheet : MonoBehaviour
     public TMP_InputField aPInput;
     public TMP_InputField notesInput;
 
-    public enum ViewPort { LANDSCAPE, PORTRAIT, HUD}
-    public ViewPort viewPort = ViewPort.PORTRAIT;
-
-    public void PrintCharacterSheet()
+    public Dictionary<string, string> GetCharacterSheetTexts()
     {
         string masterStatsText = "Stat     \tDesc.      \tCheck\n";
         string rolledStatsText = "Original Stats:\n";
@@ -34,9 +31,10 @@ public class UICharacterSheet : MonoBehaviour
             //statDamageBonusText += " " + s.ToString() + ": " + hero.statDamageBonuses[s];
             //statGainCheckText += " " + s.ToString() + ": " + hero.statGainChecks[s] + "%";
         }
-        if (viewPort == ViewPort.PORTRAIT)
+        return new Dictionary<string, string>()
         {
-            characterSheetColumnA.text =
+            {
+                "Print",
                 "Character Sheet\n" +
                 "\n" +
                 "Name: " + hero.name + "\n" +
@@ -61,19 +59,19 @@ public class UICharacterSheet : MonoBehaviour
                 "Melee: " + Mathf.Round(hero.melee) + "%\n" +
                 "\n" +
                 "Story:\n" +
-                hero.background.description;
-        }
-        else if (viewPort == ViewPort.HUD)
-        {
-            characterSheetColumnA.text =
+                hero.background.description
+            },
+            {
+                "Column A",
                 "Hero\n" +
                 "Name: " + hero.name + "\n" +
                 "Background: " + hero.background.name + "\n" +
                 "Level: " + hero.level + "\n" +
                 "\n" +
-                masterStatsText;
-
-            characterSheetColumnB.text =
+                masterStatsText
+            },
+            {
+                "Column B",
                 "\n" +
                 "HP:    " + Mathf.Round(hero.currentHP) + "    / " + Mathf.Round(hero.maxHP) + "\n" +
                 "Combat Speed: " + Mathf.Round(hero.combatSpeed) + "\n" +
@@ -82,11 +80,32 @@ public class UICharacterSheet : MonoBehaviour
                 "\n" +
                 "SKILLS:\n" +
                 "Dodge: " + hero.dodge + "%\n" +
-                "Melee: " + Mathf.Round(hero.melee) + "%";
-            hPInput.text = Mathf.Round(hero.currentHP).ToString();
-            aPInput.text = Mathf.Round(hero.currentActionPoints).ToString();
-            notesInput.text = hero.notes;
-        }
+                "Melee: " + Mathf.Round(hero.melee) + "%"
+            },
+            {
+                "HP Input",
+                Mathf.Round(hero.currentHP).ToString()
+            },
+            {
+                "AP Input",
+                Mathf.Round(hero.currentActionPoints).ToString()
+            },
+            {
+                "Notes Input",
+                hero.notes
+            }
+        };
+        
+    }
+
+    public void ViewCharacterSheet()
+    {
+        Dictionary<string, string> sheetTexts = GetCharacterSheetTexts();
+        characterSheetColumnA.text = sheetTexts["Column A"];
+        characterSheetColumnB.text = sheetTexts["Column B"];
+        hPInput.text = sheetTexts["HP Input"];
+        aPInput.text = sheetTexts["AP Input"];
+        notesInput.text = sheetTexts["Notes Input"];
     }
 
     public void EmptyCharacterSheet()

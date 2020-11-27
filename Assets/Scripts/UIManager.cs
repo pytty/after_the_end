@@ -90,7 +90,7 @@ public class UIManager : MonoBehaviour
             newHeroLevel = 1;
 
         sheet.hero = generator.CreateNewHero(newHeroName, newHeroBackground, newHeroLevel, newHeroGenes, newHeroTeam);
-        sheet.PrintCharacterSheet();
+        sheet.ViewCharacterSheet();
     }
 
     public void CreateGrid()
@@ -129,7 +129,7 @@ public class UIManager : MonoBehaviour
                 i++;
             } while (File.Exists(Path.Combine(path, filename)));
 
-            string text = sheet.characterSheetColumnA.text;
+            string text = sheet.GetCharacterSheetTexts()["Print"];
             File.WriteAllText(Path.Combine(path, filename), text);
             exportPopUpText.text = "File created at: " + Path.Combine(path, filename);
         }
