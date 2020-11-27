@@ -42,6 +42,21 @@ public class CameraController : MonoBehaviour
         float tiltAroundX = Input.GetAxis("Mouse Y") * -speed;
         // Do I have to use time.deltatime
         transform.localEulerAngles += new Vector3(tiltAroundX, tiltAroundY);
+        //clamp to verticals
+        //these values are hard coded, don't know their exact calculations (depends on camera's position)
+        float max = 30.0f;
+        float min = -45.0f;
+        //convert "strictly positive" angle to "positive/negative" angle
+        float xRot = transform.localEulerAngles.x;
+        if (xRot > 270.0f)
+            xRot -= 360.0f;
+        //clamp and convert back to "strictly positive" angle
+        xRot = Mathf.Clamp(xRot, min, max) + 360.0f;
+        //set rotation to clamped rotation
+        transform.localEulerAngles = new Vector3(
+            xRot,
+            transform.localEulerAngles.y,
+            transform.localEulerAngles.z);
     }
     private void PanCamera()
     {
@@ -55,8 +70,6 @@ public class CameraController : MonoBehaviour
 
 
         transform.position += (finalWorldMovement * speed);
-        if (mouseInput.magnitude != 0)
-            print(mouseInput.magnitude / finalWorldMovement.magnitude);
         //transform.Translate(new Vector3(-Input.GetAxis("Mouse X"), 0.0f, -Input.GetAxis("Mouse Y")) * speed);
     }
 
