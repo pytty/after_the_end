@@ -48,7 +48,16 @@ public class CameraController : MonoBehaviour
         float speed = 0.5f;
 
         //Do I have to use time.deltatime
-        transform.Translate(new Vector3(-Input.GetAxis("Mouse X"), 0.0f, -Input.GetAxis("Mouse Y")) * speed);
+        Vector3 mouseInput = new Vector3(-Input.GetAxis("Mouse X"), 0.0f, -Input.GetAxis("Mouse Y"));
+        Vector3 newZDirection = new Vector3(transform.forward.x, 0.0f, transform.forward.z).normalized;
+        Vector3 newXDirection = -Vector3.Cross(newZDirection, Vector3.up).normalized;
+        Vector3 finalWorldMovement = newXDirection * mouseInput.x + newZDirection * mouseInput.z;
+
+
+        transform.position += (finalWorldMovement * speed);
+        if (mouseInput.magnitude != 0)
+            print(mouseInput.magnitude / finalWorldMovement.magnitude);
+        //transform.Translate(new Vector3(-Input.GetAxis("Mouse X"), 0.0f, -Input.GetAxis("Mouse Y")) * speed);
     }
 
     private void ZoomCamera()
