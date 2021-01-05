@@ -21,7 +21,7 @@ public class ObjectSelector : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             go = GetClickedObject();
-            if (go != null && go.GetComponent<Tile>() != null)
+            if (go != null && go.GetComponent<Square>() != null)
                 DeselectObject();
             else if (go != null && go.GetComponent<Piece>() != null)
             {
@@ -37,7 +37,7 @@ public class ObjectSelector : MonoBehaviour
                 go = GetClickedObject();
                 if (go != null)
                 {
-                    Tile tile = go.GetComponent<Tile>();
+                    Square tile = go.GetComponent<Square>();
                     if (tile != null)
                     {
                         Piece piece = selectedGameObject.GetComponent<Piece>();

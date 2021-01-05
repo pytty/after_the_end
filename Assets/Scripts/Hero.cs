@@ -44,6 +44,7 @@ using UnityEngine;
 
     public float melee; //TO DO: pyöristys? onko float vai int?
 
+    public List<FocusPoint> focusPointPool = new List<FocusPoint>();
     public string notes;
 
     //TO DO: missä luodaan random instance

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
-    public Tile currentTile;
+    public Square currentTile;
     [SerializeField] public Hero hero;
 
     // Start is called before the first frame update
@@ -12,7 +12,7 @@ public class Piece : MonoBehaviour
     {
         if (currentTile == null)
         {
-            currentTile = FindObjectOfType<Tile>();
+            currentTile = FindObjectOfType<Square>();
         }
         MoveToCurrentTile();
     }
