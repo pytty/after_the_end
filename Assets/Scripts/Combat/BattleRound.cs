@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class BattleRound
 {
-    private const int numOfFrames = 3;
-    public List<BattleFrame> combatFrames;
+    private Battle battle;
+    public List<BattleFrame> frames;
 
     public BattleRound()
     {
-        combatFrames = new List<BattleFrame>();
-        for (int i = 0; i < numOfFrames; i++)
+        frames = new List<BattleFrame>();
+        for (int i = 0; i < battle.numOfFrames; i++)
         {
-            combatFrames.Add(new BattleFrame());
+            frames.Add(new BattleFrame());
         }
     }
 }

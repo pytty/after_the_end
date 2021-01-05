@@ -4,5 +4,4 @@ using UnityEngine;
 
 public class BattleFrame
 {
-    private const int numOfTicks = 3;
 }

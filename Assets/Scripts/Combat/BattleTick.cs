@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class BattleTick
 {
-
+    public List<Hero> initiativeOrder;
 }
