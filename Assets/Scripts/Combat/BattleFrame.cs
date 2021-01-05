@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatFrame
+public class BattleFrame
 {
     private const int numOfTicks = 3;
 }

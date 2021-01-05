@@ -5,14 +5,14 @@ using UnityEngine;
 public class CombatRound
 {
     private const int numOfFrames = 3;
-    public List<CombatFrame> combatFrames;
+    public List<BattleFrame> combatFrames;
 
     public CombatRound()
     {
-        combatFrames = new List<CombatFrame>();
+        combatFrames = new List<BattleFrame>();
         for (int i = 0; i < numOfFrames; i++)
         {
-            combatFrames.Add(new CombatFrame());
+            combatFrames.Add(new BattleFrame());
         }
     }
 }

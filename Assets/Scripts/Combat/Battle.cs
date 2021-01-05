@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Combat
+public class Battle
 {
     public int maxNumOfRounds;
     public int defNumOfFocusPoints = 8;
