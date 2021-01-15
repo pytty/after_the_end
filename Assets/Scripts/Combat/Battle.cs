@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Battle
 {
+    public enum State { Prep, Wait, SetRes, GiveOrd, ExecOrd, Over }
+    public State state = State.Prep;
+
     public int maxNumOfRounds;
     public int numOfTicks = 3; //TO DO: const
     public int numOfFrames = 3; //TO DO: const
@@ -11,4 +14,5 @@ public class Battle
     public int defNumOfFocusPoints = 8;
     //TO DO: does C# lists keep order?
     public List<BattleRound> rounds = new List<BattleRound>();
+    public int roundIndex = 0;
 }

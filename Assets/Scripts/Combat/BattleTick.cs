@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class BattleTick
 {
-    public List<Hero> initiativeOrder;
+    private BattleFrame frame;
+    public List<Hero> initiativeOrder = new List<Hero>();
+    public List<BattleTurn> turns = new List<BattleTurn>();
+    public int turnIndex = 0;
 }
