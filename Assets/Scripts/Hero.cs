@@ -44,6 +44,7 @@ using UnityEngine;
 
     public float melee; //TO DO: pyöristys? onko float vai int?
 
+    public int maxFPPoolSize = 8; //TO DO: järkevämpi paikka tälle
     public List<FocusPoint> focusPointPool = new List<FocusPoint>();
     public List<CombatCombo> combatCombos = new List<CombatCombo>();
     public string notes;

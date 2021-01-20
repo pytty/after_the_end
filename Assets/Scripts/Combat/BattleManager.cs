@@ -6,10 +6,25 @@ public class BattleManager : MonoBehaviour
 {
     public Battle battle;
 
-    void Awake()
+    private void Awake()
     {
         battle = new Battle();
         StartBattle();
+    }
+
+    private void Update()
+    {
+
+        if (battle.state == Battle.State.SetPool)
+        {
+            //while character chosen
+            //show his fp pool
+        }
+        else if (battle.state == Battle.State.SetRes)
+        {
+            //while character chosen
+            //show his fp pool and res
+        }
     }
 
     public void StartBattle()
@@ -20,6 +35,14 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator BattleSystem()
     {
+        //BEFORE BATTLE
+        //set pool
+        battle.state = Battle.State.SetPool;
+        do
+        {
+
+            yield return null;
+        } while (battle.state == Battle.State.SetRes);
         BattleRound thisRound;
         BattleFrame thisFrame;
         BattleTick thisTick;

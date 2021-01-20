@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Battle
 {
-    public enum State { Prep, Wait, SetRes, GiveOrd, ExecOrd, Over }
+    public enum State { Prep, Wait, SetPool, SetRes, GiveOrd, ExecOrd, Over }
     public State state = State.Prep;
 
     public int maxNumOfRounds;
