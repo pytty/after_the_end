@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class HeroGenerator : MonoBehaviour
 {
-    public UIManager ui;
-    public UICharacterSheet sheet;
+    private UIManager ui;
     public GameObject piecePrefab;
-    public ObjectSelector objSel;
     public List<Piece> heroes = new List<Piece>();
 
     public List<Hero.Genes> genes = new List<Hero.Genes>();
@@ -17,6 +15,7 @@ public class HeroGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        ui = GetComponent<UIManager>();
         InitializeHeroGenerator();
         if (ui != null)
         {
@@ -127,7 +126,7 @@ public class HeroGenerator : MonoBehaviour
         else if (hero.team == 2)
             teamColor = Color.red;
         go.GetComponent<Renderer>().material.SetColor("_Color", teamColor);
-        objSel.SelectObject(go);
+        GetComponent<ObjectSelector>().SelectObject(go);
 
         return hero;
     }

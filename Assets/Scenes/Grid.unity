@@ -2652,7 +2652,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 909243389}
+      - m_Target: {fileID: 1383542155}
         m_TargetAssemblyTypeName: ObjectSelector, Assembly-CSharp
         m_MethodName: EditHeroAP
         m_Mode: 0
@@ -5793,7 +5793,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 909243389}
+      - m_Target: {fileID: 1383542155}
         m_TargetAssemblyTypeName: ObjectSelector, Assembly-CSharp
         m_MethodName: EditHeroHP
         m_Mode: 0
@@ -6108,7 +6108,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 909243389}
+      - m_Target: {fileID: 1383542155}
         m_TargetAssemblyTypeName: ObjectSelector, Assembly-CSharp
         m_MethodName: EditHeroNotes
         m_Mode: 0
@@ -6379,7 +6379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &614817165
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7920,7 +7920,7 @@ RectTransform:
   - {fileID: 49907450}
   - {fileID: 1432174}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9497,52 +9497,6 @@ MonoBehaviour:
   hPInput: {fileID: 574152864}
   aPInput: {fileID: 276187921}
   notesInput: {fileID: 606138514}
---- !u!1 &909243388
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 909243390}
-  - component: {fileID: 909243389}
-  m_Layer: 0
-  m_Name: ObjectSelector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &909243389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909243388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ee5315034ee1224e983625fe8366e34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedGameObject: {fileID: 0}
-  selectIndicator: {fileID: 1212598893}
-  sheet: {fileID: 899858617}
---- !u!4 &909243390
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909243388}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &922297829
 GameObject:
   m_ObjectHideFlags: 0
@@ -11039,7 +10993,7 @@ Transform:
   m_Children:
   - {fileID: 688041450}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1235166679
 GameObject:
@@ -11105,7 +11059,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1244603016
 GameObject:
@@ -12153,6 +12107,7 @@ GameObject:
   - component: {fileID: 1383542152}
   - component: {fileID: 1383542151}
   - component: {fileID: 1383542154}
+  - component: {fileID: 1383542155}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -12198,10 +12153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1752466257686c94897b4e5473f30635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ui: {fileID: 1383542151}
-  sheet: {fileID: 899858617}
   piecePrefab: {fileID: 8426834495769266726, guid: 87ebbb086730f144facbac11d518814f, type: 3}
-  objSel: {fileID: 909243389}
   heroes: []
 --- !u!4 &1383542153
 Transform:
@@ -12236,6 +12188,20 @@ MonoBehaviour:
   maxSideLength: 64
   standardWidth: 8
   standardLength: 8
+--- !u!114 &1383542155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383542150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee5315034ee1224e983625fe8366e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedGameObject: {fileID: 0}
+  selectIndicator: {fileID: 1212598893}
 --- !u!1 &1386605636
 GameObject:
   m_ObjectHideFlags: 0
@@ -13810,7 +13776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1587859932
 RectTransform:
   m_ObjectHideFlags: 0

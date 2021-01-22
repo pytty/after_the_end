@@ -6,10 +6,14 @@ public class ObjectSelector : MonoBehaviour
 {
     public GameObject selectedGameObject;
     public GameObject selectIndicator;
-    public UICharacterSheet sheet;
+    private UIManager uIManager;
     private GameObject go;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        uIManager = GetComponent<UIManager>();
+    }
+
     void Start()
     {
         DeselectObject();
@@ -79,9 +83,11 @@ public class ObjectSelector : MonoBehaviour
         selectIndicator.transform.position = go.transform.position;
         selectIndicator.SetActive(true);
 
-        sheet.gameObject.SetActive(true);
-        sheet.hero = selectedGameObject.GetComponent<Piece>().hero;
-        sheet.ViewCharacterSheet();
+        uIManager.sheet.gameObject.SetActive(true);
+        uIManager.sheet.hero = selectedGameObject.GetComponent<Piece>().hero;
+        uIManager.sheet.ViewCharacterSheet();
+
+
     }
 
     public void DeselectObject()
@@ -90,8 +96,8 @@ public class ObjectSelector : MonoBehaviour
         selectIndicator.SetActive(false);
         selectedGameObject = null;
 
-        sheet.gameObject.SetActive(false);
-        sheet.EmptyCharacterSheet();
+        uIManager.sheet.gameObject.SetActive(false);
+        uIManager.sheet.EmptyCharacterSheet();
     }
 
     public void EditHeroHP(string hp)
@@ -99,7 +105,7 @@ public class ObjectSelector : MonoBehaviour
         if (selectedGameObject != null)
         {
             selectedGameObject.GetComponent<Piece>().hero.currentHP = float.Parse(hp);
-            sheet.ViewCharacterSheet();
+            uIManager.sheet.ViewCharacterSheet();
         }
     }
 
@@ -108,7 +114,7 @@ public class ObjectSelector : MonoBehaviour
         if (selectedGameObject != null)
         {
             selectedGameObject.GetComponent<Piece>().hero.currentActionPoints = int.Parse(ap);
-            sheet.ViewCharacterSheet();
+            uIManager.sheet.ViewCharacterSheet();
         }
     }
     public void EditHeroNotes(string notes)
@@ -116,7 +122,7 @@ public class ObjectSelector : MonoBehaviour
         if (selectedGameObject != null)
         {
             selectedGameObject.GetComponent<Piece>().hero.notes = notes;
-            sheet.ViewCharacterSheet();
+            uIManager.sheet.ViewCharacterSheet();
         }
     }
 }
