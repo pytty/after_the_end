@@ -2652,7 +2652,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1383542155}
         m_TargetAssemblyTypeName: ObjectSelector, Assembly-CSharp
         m_MethodName: EditHeroAP
         m_Mode: 0
@@ -5793,7 +5793,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1383542155}
         m_TargetAssemblyTypeName: ObjectSelector, Assembly-CSharp
         m_MethodName: EditHeroHP
         m_Mode: 0
@@ -6108,7 +6108,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1383542155}
         m_TargetAssemblyTypeName: ObjectSelector, Assembly-CSharp
         m_MethodName: EditHeroNotes
         m_Mode: 0
@@ -12153,7 +12153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1752466257686c94897b4e5473f30635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ui: {fileID: 1383542151}
   piecePrefab: {fileID: 8426834495769266726, guid: 87ebbb086730f144facbac11d518814f, type: 3}
   heroes: []
 --- !u!4 &1383542153
@@ -12203,7 +12202,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedGameObject: {fileID: 0}
   selectIndicator: {fileID: 1212598893}
-  uIManager: {fileID: 0}
 --- !u!1 &1386605636
 GameObject:
   m_ObjectHideFlags: 0
