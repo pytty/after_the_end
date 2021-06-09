@@ -5,9 +5,11 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     public Battle battle;
+    private UIManager ui;
 
     private void Awake()
     {
+        ui = GetComponent<UIManager>();
         battle = new Battle();
         StartBattle();
     }
