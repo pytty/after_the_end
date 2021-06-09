@@ -10,6 +10,7 @@ public class UICharacterSheet : MonoBehaviour
     public Hero hero;
     public TMP_Text characterSheetColumnA;
     public TMP_Text characterSheetColumnB;
+    public TMP_Text characterSheetNew;
     public TMP_InputField hPInput;
     public TMP_InputField aPInput;
     public TMP_InputField notesInput;
@@ -17,6 +18,7 @@ public class UICharacterSheet : MonoBehaviour
     public Dictionary<string, string> GetCharacterSheetTexts()
     {
         string masterStatsText = "Stat     \tDesc.      \tCheck\n";
+        string newMasterStatsText = "Stat     \tGrade      \tDesc.\n";
         string rolledStatsText = "Original Stats:\n";
         string baseStatsText = "Base Stats:\n";
         string finalStatsText = "Final Stats:\n";
@@ -28,6 +30,7 @@ public class UICharacterSheet : MonoBehaviour
             rolledStatsText += " " + s.ToString() + ": " + hero.rolledStats[s];
             baseStatsText += " " + s.ToString() + ": " + hero.baseStats[s];
             finalStatsText += " " + s.ToString() + ": " + hero.finalStats[s];
+            newMasterStatsText += s.ToString() + "\t\t" + hero.finalStats[s] + "\t\t" + hero.StatDesc(hero.finalStats[s]) + "\n";
             //statDamageBonusText += " " + s.ToString() + ": " + hero.statDamageBonuses[s];
             //statGainCheckText += " " + s.ToString() + ": " + hero.statGainChecks[s] + "%";
         }
@@ -93,6 +96,25 @@ public class UICharacterSheet : MonoBehaviour
             {
                 "Notes Input",
                 hero.notes
+            },
+            {
+                "NewSheet",
+                "CHARACTER SHEET\n" +
+                "\n" +
+                "Name: " + hero.name + "\n" +
+                "Gang: " + "blööblöö" + "\n" +
+                "Background: " + hero.background.name + "\n" +
+                "Level: " + hero.level + "\n" +
+                "\n" +
+                newMasterStatsText +
+                "\n" +
+                "HP: " + Mathf.Round(hero.currentHP) + "/" + Mathf.Round(hero.maxHP) + "\n" +
+                "\n" +
+                "APs: " + hero.currentActionPoints + "/" + hero.maxActionPoints + "\n" +
+                "\n" +
+                "CS: " + Mathf.Round(hero.combatSpeed) + "\n" +
+                "\n" +
+                "MIB: " + hero.movementInitiativeBonus
             }
         };
         
@@ -101,6 +123,9 @@ public class UICharacterSheet : MonoBehaviour
     public void ViewCharacterSheet()
     {
         Dictionary<string, string> sheetTexts = GetCharacterSheetTexts();
+
+        characterSheetNew.text = sheetTexts["NewSheet"];
+
         characterSheetColumnA.text = sheetTexts["Column A"];
         characterSheetColumnB.text = sheetTexts["Column B"];
         hPInput.text = sheetTexts["HP Input"];
@@ -112,5 +137,6 @@ public class UICharacterSheet : MonoBehaviour
     {
         characterSheetColumnA.text = "";
         characterSheetColumnB.text = "";
+        characterSheetNew.text = "";
     }
 }
