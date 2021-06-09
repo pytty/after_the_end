@@ -102,7 +102,7 @@ public class UICharacterSheet : MonoBehaviour
                 "CHARACTER SHEET\n" +
                 "\n" +
                 "Name: " + hero.name + "\n" +
-                "Gang: " + "blööblöö" + "\n" +
+                "Gang: " + hero.team + "\n" +
                 "Background: " + hero.background.name + "\n" +
                 "Level: " + hero.level + "\n" +
                 "\n" +
