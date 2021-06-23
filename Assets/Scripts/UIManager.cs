@@ -7,7 +7,9 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public HeroGenerator generator;
+    private HeroGenerator generator;
+    private ObjectSelector objectSelector;
+
     public UICharacterSheet sheet;
     public TMP_Dropdown genesSelect;
     public TMP_Dropdown backgroundSelect;
@@ -27,6 +29,9 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        generator = GetComponent<HeroGenerator>();
+        objectSelector = GetComponent<ObjectSelector>();
+
         List<string> levels = new List<string>();
         //väärin
         Hero pylly = new Hero();
