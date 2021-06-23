@@ -2180,7 +2180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4105518652510239298, guid: 7017b1fac2e95dd43bf6d67727cb3d35, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4105518652510239298, guid: 7017b1fac2e95dd43bf6d67727cb3d35, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2196,7 +2196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4105518652510239298, guid: 7017b1fac2e95dd43bf6d67727cb3d35, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4105518652510239298, guid: 7017b1fac2e95dd43bf6d67727cb3d35, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -8641,8 +8641,8 @@ RectTransform:
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 43461453}
-  - {fileID: 174831612}
   - {fileID: 1803274403}
+  - {fileID: 174831612}
   m_Father: {fileID: 131814445}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15741,7 +15741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0177d9f127ee2454d82351f337078261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generator: {fileID: 1383542152}
   sheet: {fileID: 899858617}
   genesSelect: {fileID: 23903323}
   backgroundSelect: {fileID: 189866821}
@@ -20013,7 +20012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4105518652510239298, guid: c9c2519fffca1db4784102715f81efd1, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4105518652510239298, guid: c9c2519fffca1db4784102715f81efd1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -20029,7 +20028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4105518652510239298, guid: c9c2519fffca1db4784102715f81efd1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4105518652510239298, guid: c9c2519fffca1db4784102715f81efd1, type: 3}
       propertyPath: m_AnchoredPosition.y
