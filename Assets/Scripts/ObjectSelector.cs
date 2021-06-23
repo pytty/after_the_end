@@ -8,10 +8,12 @@ public class ObjectSelector : MonoBehaviour
     public GameObject selectIndicator;
     private UIManager uIManager;
     private GameObject go;
+    private BattleManager battleManager;
 
     private void Awake()
     {
         uIManager = GetComponent<UIManager>();
+        battleManager = GetComponent<BattleManager>();
     }
 
     void Start()
@@ -87,10 +89,13 @@ public class ObjectSelector : MonoBehaviour
         uIManager.sheet.hero = selectedGameObject.GetComponent<Piece>().hero;
         uIManager.sheet.ViewCharacterSheet();
 
-        //TO DO: if battle not started
-        GameObject kulli = GameObject.Find("Canvas/Side Buttons/Delete Hero Button");
-        if(kulli != null)
-            kulli.SetActive(true);
+        //activate "delete hero" button if battle not started
+        if (battleManager.battle.state == Battle.State.Prep)
+        {
+            GameObject kulli = GameObject.Find("Canvas/Side Buttons/Delete Hero Button");
+            if (kulli != null)
+                kulli.SetActive(true);
+        }
 
     }
 
@@ -103,10 +108,13 @@ public class ObjectSelector : MonoBehaviour
         uIManager.sheet.gameObject.SetActive(false);
         uIManager.sheet.EmptyCharacterSheet();
 
-        //TO DO: if battle not started
-        GameObject kulli = GameObject.Find("Canvas/Side Buttons/Delete Hero Button");
-        if (kulli != null)
-            kulli.SetActive(false);
+        //deactivate "delete hero" button if battle not started
+        if (battleManager.battle.state == Battle.State.Prep)
+        {
+            GameObject kulli = GameObject.Find("Canvas/Side Buttons/Delete Hero Button");
+            if (kulli != null)
+                kulli.SetActive(false);
+        }
     }
 
     public void DeletePiece()

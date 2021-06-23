@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    public Battle battle;
+    [SerializeField] public Battle battle;
     private UIManager ui;
 
     private void Awake()
     {
         ui = GetComponent<UIManager>();
         battle = new Battle();
-        StartBattle();
+        //StartBattle();
     }
 
     private void Update()
@@ -32,6 +32,7 @@ public class BattleManager : MonoBehaviour
     public void StartBattle()
     {
         battle.roundIndex = 0;
+        battle.state = Battle.State.SetPool;
         StartCoroutine(BattleSystem());
     }
 
