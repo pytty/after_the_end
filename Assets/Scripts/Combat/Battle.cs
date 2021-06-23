@@ -9,7 +9,7 @@ using UnityEngine;
     public State state = State.Prep;
 
     public int maxNumOfRounds;
-    public int numOfTicks = 3; //TO DO: const
+    public int numOfTicks = 4; //TO DO: const
     public int numOfFrames = 3; //TO DO: const
 
     public int defNumOfFocusPoints = 8;

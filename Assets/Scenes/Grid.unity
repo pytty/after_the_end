@@ -15352,7 +15352,7 @@ MonoBehaviour:
   battle:
     state: 0
     maxNumOfRounds: 0
-    numOfTicks: 3
+    numOfTicks: 4
     numOfFrames: 3
     defNumOfFocusPoints: 8
     roundIndex: 0
