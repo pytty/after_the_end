@@ -6,6 +6,7 @@ using UnityEngine;
 public class HeroGenerator : MonoBehaviour
 {
     private UIManager ui;
+    private ObjectSelector selector;
     public GameObject piecePrefab;
     public List<Piece> heroes = new List<Piece>();
 
@@ -16,6 +17,7 @@ public class HeroGenerator : MonoBehaviour
     void Awake()
     {
         ui = GetComponent<UIManager>();
+        selector = GetComponent<ObjectSelector>();
         InitializeHeroGenerator();
         if (ui != null)
         {
@@ -126,7 +128,7 @@ public class HeroGenerator : MonoBehaviour
         else if (hero.team == 2)
             teamColor = Color.red;
         go.GetComponent<Renderer>().material.SetColor("_Color", teamColor);
-        GetComponent<ObjectSelector>().SelectObject(go);
+        selector.SelectObject(go);
 
         return hero;
     }
