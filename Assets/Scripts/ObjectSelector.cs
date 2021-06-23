@@ -87,6 +87,10 @@ public class ObjectSelector : MonoBehaviour
         uIManager.sheet.hero = selectedGameObject.GetComponent<Piece>().hero;
         uIManager.sheet.ViewCharacterSheet();
 
+        //TO DO: if battle not started
+        GameObject kulli = GameObject.Find("Canvas/Side Buttons/Delete Hero Button");
+        if(kulli != null)
+            kulli.SetActive(true);
 
     }
 
@@ -98,6 +102,21 @@ public class ObjectSelector : MonoBehaviour
 
         uIManager.sheet.gameObject.SetActive(false);
         uIManager.sheet.EmptyCharacterSheet();
+
+        //TO DO: if battle not started
+        GameObject kulli = GameObject.Find("Canvas/Side Buttons/Delete Hero Button");
+        if (kulli != null)
+            kulli.SetActive(false);
+    }
+
+    public void DeletePiece()
+    {
+        GameObject temp = selectedGameObject;
+        if (temp.GetComponent<Piece>() != null)
+        {
+            DeselectObject();
+            Destroy(temp);
+        }
     }
 
     public void EditHeroHP(string hp)
