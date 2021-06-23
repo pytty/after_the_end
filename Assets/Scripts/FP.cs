@@ -6,4 +6,5 @@ using UnityEngine;
 [Serializable] public class FP : MonoBehaviour
 {
     public Hero.Stat stat;
+    Color color; //RED STR, BLU AGI, WHI WIL
 }
