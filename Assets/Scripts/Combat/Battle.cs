@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Battle
+[Serializable] public class Battle
 {
     public enum State { Prep, Wait, SetPool, SetRes, GiveOrd, ExecOrd, Over }
     public State state = State.Prep;
