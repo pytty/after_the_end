@@ -6,10 +6,12 @@ public class BattleManager : MonoBehaviour
 {
     [SerializeField] public Battle battle;
     private UIManager ui;
+    private ObjectSelector selector;
 
     private void Awake()
     {
         ui = GetComponent<UIManager>();
+        selector = GetComponent<ObjectSelector>();
         battle = new Battle();
         //StartBattle();
     }
@@ -41,7 +43,9 @@ public class BattleManager : MonoBehaviour
         //BEFORE BATTLE
         //set pool
         battle.state = Battle.State.SetPool;
-        if (ui.selectedHero != null)
+        ui.ShowActionButtonsUI(true);
+        ui.ShowActionReadyButton(true);
+        if (ui.selectedHero != null && selector.selectedGameObject != null && selector.selectedGameObject.GetComponent<Piece>().hero != null)
         {
             ui.ShowFPPool(true);
             ui.ShowFPPoolSelectUI(true);
