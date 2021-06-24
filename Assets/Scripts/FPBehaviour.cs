@@ -32,4 +32,10 @@ public class FPBehaviour : MonoBehaviour
 
         image.color = newColor;
     }
+
+    public void ClickFPPool()
+    {
+        //TO DO: paskasti toteutettu
+        GameObject.Find("GameManager").GetComponent<UIManager>().ClickFPPool(statText.text);
+    }
 }

@@ -114,7 +114,21 @@ public class UIManager : MonoBehaviour
     public void ShowFPPool()
     {
         //TO DO: sort FP Pool, both in the List<> and in the Editor hierarchy
+        RefreshFPPool();
         fPPoolUI.SetActive(true);
+    }
+
+    public void HideFPPool()
+    {
+        fPPoolUI.SetActive(false);
+    }
+
+    private void RefreshFPPool()
+    {
+        foreach (FPBehaviour FPB in fPsInFPPool)
+        {
+            FPB.gameObject.SetActive(false);
+        }
         if (selectedHero != null)
         {
             for (int i = 0; i < selectedHero.FPPool.Count; i++)
@@ -123,15 +137,6 @@ public class UIManager : MonoBehaviour
                 fPsInFPPool[i].gameObject.SetActive(true);
             }
         }
-    }
-
-    public void HideFPPool()
-    {
-        foreach (FPBehaviour FPB in fPsInFPPool)
-        {
-            FPB.gameObject.SetActive(false);
-        }
-        fPPoolUI.SetActive(false);
     }
 
     public void ShowFPPoolSelectUI(bool yes)
@@ -146,10 +151,38 @@ public class UIManager : MonoBehaviour
         // https://answers.unity.com/questions/1549639/enum-as-a-function-param-in-a-button-onclick.html
         if (battleManager.battle.state == Battle.State.SetPool)
         {
-            if (selectedHero.FPPool.Count < selectedHero.maxFPPoolSize)
+            if (selectedHero != null && selectedHero.FPPool.Count < selectedHero.maxFPPoolSize)
             {
                 selectedHero.FPPool.Add(new FP((Hero.Stat)System.Enum.Parse(typeof(Hero.Stat), stat)));
-                ShowFPPool();
+                RefreshFPPool();
+            }
+        }
+    }
+
+    public void ClickFPPool(string stat)
+    {
+        Debug.Log(stat);
+        //TO DO: sama juttu, stringin heittäminen on paska tapa, erityisesti kun se on kovakoodattu onClickin parametriksi
+        // se pitäisi tehdä enumilla, ja se onnistuu vain jos Stat muutetaan classiksi
+        // https://answers.unity.com/questions/1549639/enum-as-a-function-param-in-a-button-onclick.html
+        if (battleManager.battle.state == Battle.State.SetPool)
+        {
+            if (selectedHero != null) 
+            {
+                //TO DO: sortaa lista
+                //Find first occurence of the stat in the list
+                int index = selectedHero.FPPool.FindIndex(x => x.stat.ToString() == stat);
+                Debug.Log(index);
+                Debug.Log(selectedHero.FPPool[index]);
+                if (index != -1)
+                {
+                    selectedHero.FPPool.RemoveAt(index);
+                    RefreshFPPool();
+                }
+                else
+                {
+                    throw new System.Exception("I AM ERROR.");
+                }
             }
         }
     }
