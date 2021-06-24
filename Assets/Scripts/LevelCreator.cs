@@ -12,8 +12,8 @@ public class LevelCreator : MonoBehaviour
     public int minSideLength = 1;
     public int maxSideLength = 64;
 
-    public int standardWidth = 8;
-    public int standardLength = 8;
+    public int standardWidth = 15;
+    public int standardLength = 15;
 
     private void Awake()
     {

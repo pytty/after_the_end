@@ -7,8 +7,21 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public HeroGenerator generator;
+    private HeroGenerator generator;
+    private ObjectSelector objectSelector;
+    private BattleManager battleManager;
+    public Hero selectedHero = null;
+
     public UICharacterSheet sheet;
+    public GameObject fPPoolUI;
+    //TO DO: järkevämpi paikka tälle, ja koolle rajoitus ja alustus tehdään koodissa eikä drag&droppaamalla editorissa
+    public List<FPBehaviour> fPsInFPPool = new List<FPBehaviour>();
+    public GameObject fPPoolSelectUI;
+    public GameObject actionButtonsUI;
+    public GameObject actionReadyButton;
+
+    public TMP_Text roundFrameTickText;
+
     public TMP_Dropdown genesSelect;
     public TMP_Dropdown backgroundSelect;
     public TMP_Dropdown levelSelect;
@@ -27,6 +40,10 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        generator = GetComponent<HeroGenerator>();
+        objectSelector = GetComponent<ObjectSelector>();
+        battleManager = GetComponent<BattleManager>();
+
         List<string> levels = new List<string>();
         //väärin
         Hero pylly = new Hero();
@@ -96,6 +113,93 @@ public class UIManager : MonoBehaviour
     public void CreateGrid()
     {
         GetComponent<LevelCreator>().CreateGrid(newGridWidth, newGridLength);
+    }
+
+    public void ShowFPPool(bool yes)
+    {
+        //TO DO: sort FP Pool, both in the List<> and in the Editor hierarchy
+        if (yes)
+            RefreshFPPool();
+        fPPoolUI.SetActive(yes);
+    }
+
+    private void RefreshFPPool()
+    {
+        foreach (FPBehaviour FPB in fPsInFPPool)
+        {
+            FPB.gameObject.SetActive(false);
+        }
+        if (selectedHero != null)
+        {
+            for (int i = 0; i < selectedHero.FPPool.Count; i++)
+            {
+                fPsInFPPool[i].ChangeType(selectedHero.FPPool[i].stat);
+                fPsInFPPool[i].gameObject.SetActive(true);
+            }
+        }
+    }
+
+    public void ShowFPPoolSelectUI(bool yes)
+    {
+        fPPoolSelectUI.SetActive(yes);
+    }
+
+    public void ClickFPPoolSelect(string stat)
+    {
+        //TO DO: stringin heittäminen on paska tapa, erityisesti kun se on kovakoodattu onClickin parametriksi
+        // se pitäisi tehdä enumilla, ja se onnistuu vain jos Stat muutetaan classiksi
+        // https://answers.unity.com/questions/1549639/enum-as-a-function-param-in-a-button-onclick.html
+        if (battleManager.battle.state == Battle.State.SetPool)
+        {
+            if (selectedHero != null && selectedHero.FPPool.Count < selectedHero.maxFPPoolSize)
+            {
+                selectedHero.FPPool.Add(new FP((Hero.Stat)System.Enum.Parse(typeof(Hero.Stat), stat)));
+                RefreshFPPool();
+            }
+        }
+    }
+
+    public void ClickFPPool(string stat)
+    {
+        //TO DO: sama juttu, stringin heittäminen on paska tapa, erityisesti kun se on kovakoodattu onClickin parametriksi
+        // se pitäisi tehdä enumilla, ja se onnistuu vain jos Stat muutetaan classiksi
+        // https://answers.unity.com/questions/1549639/enum-as-a-function-param-in-a-button-onclick.html
+        if (battleManager.battle.state == Battle.State.SetPool)
+        {
+            if (selectedHero != null) 
+            {
+                //TO DO: sortaa lista
+                //Find first occurence of the stat in the list
+                int index = selectedHero.FPPool.FindIndex(x => x.stat.ToString() == stat);
+                if (index != -1)
+                {
+                    selectedHero.FPPool.RemoveAt(index);
+                    RefreshFPPool();
+                }
+                else
+                {
+                    throw new System.Exception("I AM ERROR.");
+                }
+            }
+        }
+    }
+
+    public void ShowActionButtonsUI(bool yes)
+    {
+        actionButtonsUI.SetActive(yes);
+    }
+
+    public void ShowActionReadyButton(bool yes)
+    {
+        actionReadyButton.SetActive(yes);
+    }
+
+    public void ClickActionReadyButton()
+    {
+        if (battleManager.battle.state == Battle.State.SetPool)
+        {
+            battleManager.battle.state = Battle.State.Ready;
+        }
     }
 
     public void ExportCharacterSheet()

@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    public Battle battle;
+    [SerializeField] public Battle battle;
+    private UIManager ui;
+    private ObjectSelector selector;
 
     private void Awake()
     {
+        ui = GetComponent<UIManager>();
+        selector = GetComponent<ObjectSelector>();
         battle = new Battle();
-        StartBattle();
+        //TO DO: kovakoodausta
+        battle.maxNumOfRounds = 8;
+        //TO DO: nää selkeempään paikkaan
+        battle.roundIndex = 0;
+        battle.state = Battle.State.Prep;
+        StartCoroutine(BattleStateMachine());
+        //StartBattle();
     }
 
     private void Update()
     {
-
+        //TO DO: tää on hyvä tapa, rajapinnat pysyvät selkeinä
         if (battle.state == Battle.State.SetPool)
         {
             //while character chosen
@@ -29,7 +39,7 @@ public class BattleManager : MonoBehaviour
 
     public void StartBattle()
     {
-        battle.roundIndex = 0;
+        battle.state = Battle.State.SetPool;
         StartCoroutine(BattleSystem());
     }
 
@@ -38,11 +48,20 @@ public class BattleManager : MonoBehaviour
         //BEFORE BATTLE
         //set pool
         battle.state = Battle.State.SetPool;
+        ui.ShowActionButtonsUI(true);
+        ui.ShowActionReadyButton(true);
+        if (ui.selectedHero != null && selector.selectedGameObject != null && selector.selectedGameObject.GetComponent<Piece>().hero != null)
+        {
+            ui.ShowFPPool(true);
+            ui.ShowFPPoolSelectUI(true);
+        }
         do
         {
-
+            //wait for player to set fp pool
             yield return null;
-        } while (battle.state == Battle.State.SetRes);
+        } while (battle.state == Battle.State.SetPool);
+        ui.ShowActionReadyButton(false);
+        ui.ShowFPPoolSelectUI(false);
         BattleRound thisRound;
         BattleFrame thisFrame;
         BattleTick thisTick;
@@ -116,5 +135,61 @@ public class BattleManager : MonoBehaviour
         } while (battle.roundIndex < battle.maxNumOfRounds);
         battle.state = Battle.State.Over;
         yield return null;
+    }
+
+    private IEnumerator BattleStateMachine()
+    {
+        string RFTString()
+        {
+            //TO DO: hyi!
+            return
+                    "Round:\t" + (battle.roundIndex + 1) + "/" + battle.maxNumOfRounds + "\n" +
+                    "Frame:\t" + (battle.rounds[battle.roundIndex].frameIndex + 1) + "/" + battle.numOfFrames + "\n" +
+                    "Tick:\t\t" + (battle.rounds[battle.roundIndex].frames[battle.rounds[battle.roundIndex].frameIndex].tickIndex + 1) + "/" + battle.numOfTicks;
+        }
+        bool end = false;
+        do
+        {
+            if (battle.state == Battle.State.Prep)
+            {
+                ui.roundFrameTickText.text = "Deployment";
+                yield return null;
+            }
+            else if (battle.state == Battle.State.Wait)
+            {
+                yield return null;
+            }
+            else if (battle.state == Battle.State.Ready)
+            {
+                ui.roundFrameTickText.text = RFTString();
+                yield return null;
+            }
+            else if (battle.state == Battle.State.SetPool)
+            {
+                ui.roundFrameTickText.text = "Set FP Pools";
+                yield return null;
+            }
+            else if (battle.state == Battle.State.SetRes)
+            {
+                ui.roundFrameTickText.text = RFTString();
+                yield return null;
+            }
+            else if (battle.state == Battle.State.GiveOrd)
+            {
+                ui.roundFrameTickText.text = RFTString();
+                yield return null;
+            }
+            else if (battle.state == Battle.State.ExecOrd)
+            {
+                ui.roundFrameTickText.text = RFTString();
+                yield return null;
+            }
+            else if (battle.state == Battle.State.Over)
+            {
+                ui.roundFrameTickText.text = RFTString();
+                end = true;
+                yield return null;
+            }
+        } while (!end);
     }
 }

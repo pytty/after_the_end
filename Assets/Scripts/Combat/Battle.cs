@@ -1,14 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Battle
+[Serializable] public class Battle
 {
-    public enum State { Prep, Wait, SetPool, SetRes, GiveOrd, ExecOrd, Over }
+    public enum State { Prep, Wait, Ready, SetPool, SetRes, GiveOrd, ExecOrd, Over }
     public State state = State.Prep;
 
     public int maxNumOfRounds;
-    public int numOfTicks = 3; //TO DO: const
+    public int numOfTicks = 4; //TO DO: const
     public int numOfFrames = 3; //TO DO: const
 
     public int defNumOfFocusPoints = 8;

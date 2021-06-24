@@ -8,10 +8,12 @@ public class ObjectSelector : MonoBehaviour
     public GameObject selectIndicator;
     private UIManager uIManager;
     private GameObject go;
+    private BattleManager battleManager;
 
     private void Awake()
     {
         uIManager = GetComponent<UIManager>();
+        battleManager = GetComponent<BattleManager>();
     }
 
     void Start()
@@ -25,15 +27,19 @@ public class ObjectSelector : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             go = GetClickedObject();
-            if (go != null && go.GetComponent<Square>() != null)
+            /*if (go != null && go.GetComponent<Square>() != null)
                 DeselectObject();
-            else if (go != null && go.GetComponent<Piece>() != null)
+            else*/ if (go != null && go.GetComponent<Piece>() != null)
             {
                 DeselectObject();
                 SelectObject(go);
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+            DeselectObject();
+
+        //TO DO: tää pitää poistaa
         if (Input.GetMouseButtonDown(1))
         {
             if (selectedGameObject)
@@ -83,10 +89,30 @@ public class ObjectSelector : MonoBehaviour
         selectIndicator.transform.position = go.transform.position;
         selectIndicator.SetActive(true);
 
+        uIManager.selectedHero = selectedGameObject.GetComponent<Piece>().hero;
+
         uIManager.sheet.gameObject.SetActive(true);
-        uIManager.sheet.hero = selectedGameObject.GetComponent<Piece>().hero;
+        uIManager.sheet.hero = uIManager.selectedHero;
         uIManager.sheet.ViewCharacterSheet();
 
+
+        if (battleManager.battle.state != Battle.State.Prep)
+        {
+            uIManager.ShowFPPool(true);
+        }
+
+        if (battleManager.battle.state == Battle.State.SetPool)
+        {
+            uIManager.ShowFPPoolSelectUI(true);
+        }
+
+        //activate "delete hero" button if battle not started
+        if (battleManager.battle.state == Battle.State.Prep)
+        {
+            GameObject kulli = GameObject.Find("Canvas/Side Buttons/Delete Hero Button");
+            if (kulli != null)
+                kulli.SetActive(true);
+        }
 
     }
 
@@ -96,8 +122,30 @@ public class ObjectSelector : MonoBehaviour
         selectIndicator.SetActive(false);
         selectedGameObject = null;
 
+        uIManager.selectedHero = null;
         uIManager.sheet.gameObject.SetActive(false);
         uIManager.sheet.EmptyCharacterSheet();
+
+        uIManager.ShowFPPool(false);
+        uIManager.ShowFPPoolSelectUI(false);
+
+        //deactivate "delete hero" button if battle not started
+        if (battleManager.battle.state == Battle.State.Prep)
+        {
+            GameObject kulli = GameObject.Find("Canvas/Side Buttons/Delete Hero Button");
+            if (kulli != null)
+                kulli.SetActive(false);
+        }
+    }
+
+    public void DeletePiece()
+    {
+        GameObject temp = selectedGameObject;
+        if (temp.GetComponent<Piece>() != null)
+        {
+            DeselectObject();
+            Destroy(temp);
+        }
     }
 
     public void EditHeroHP(string hp)
