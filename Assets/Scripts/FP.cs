@@ -7,4 +7,9 @@ using UnityEngine;
 {
     public Hero.Stat stat;
     Color color; //RED STR, BLU AGI, WHI WIL
+
+    public FP(Hero.Stat stat)
+    {
+        this.stat = stat;
+    }
 }

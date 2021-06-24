@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 {
     private HeroGenerator generator;
     private ObjectSelector objectSelector;
+    private BattleManager battleManager;
     public Hero selectedHero = null;
 
     public UICharacterSheet sheet;
@@ -37,6 +38,7 @@ public class UIManager : MonoBehaviour
     {
         generator = GetComponent<HeroGenerator>();
         objectSelector = GetComponent<ObjectSelector>();
+        battleManager = GetComponent<BattleManager>();
 
         List<string> levels = new List<string>();
         //väärin
@@ -135,6 +137,21 @@ public class UIManager : MonoBehaviour
     public void ShowFPPoolSelectUI(bool yes)
     {
         fPPoolSelectUI.SetActive(yes);
+    }
+
+    public void ClickFPPoolSelect(string stat)
+    {
+        //TO DO: stringin heittäminen on paska tapa, erityisesti kun se on kovakoodattu onClickin parametriksi
+        // se pitäisi tehdä enumilla, ja se onnistuu vain jos Stat muutetaan classiksi
+        // https://answers.unity.com/questions/1549639/enum-as-a-function-param-in-a-button-onclick.html
+        if (battleManager.battle.state == Battle.State.SetPool)
+        {
+            if (selectedHero.FPPool.Count < selectedHero.maxFPPoolSize)
+            {
+                selectedHero.FPPool.Add(new FP((Hero.Stat)System.Enum.Parse(typeof(Hero.Stat), stat)));
+                ShowFPPool();
+            }
+        }
     }
 
     public void ExportCharacterSheet()
