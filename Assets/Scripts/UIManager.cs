@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     //TO DO: järkevämpi paikka tälle, ja koolle rajoitus ja alustus tehdään koodissa eikä drag&droppaamalla editorissa
     public List<FPBehaviour> fPsInFPPool = new List<FPBehaviour>();
     public GameObject fPPoolSelectUI;
+    public GameObject resourceSelectionUI;
     public GameObject actionButtonsUI;
     public GameObject actionReadyButton;
 
@@ -184,6 +185,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ShowResourceSelectionUI(bool yes)
+    {
+        resourceSelectionUI.SetActive(yes);
+    }
+
+
     public void ShowActionButtonsUI(bool yes)
     {
         actionButtonsUI.SetActive(yes);
@@ -197,6 +204,10 @@ public class UIManager : MonoBehaviour
     public void ClickActionReadyButton()
     {
         if (battleManager.battle.state == Battle.State.SetPool)
+        {
+            battleManager.battle.state = Battle.State.Ready;
+        }
+        else if (battleManager.battle.state == Battle.State.SetRes)
         {
             battleManager.battle.state = Battle.State.Ready;
         }
