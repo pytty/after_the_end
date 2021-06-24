@@ -40,8 +40,12 @@ public class BattleManager : MonoBehaviour
     {
         //BEFORE BATTLE
         //set pool
-        //ui.ShowSetPoolUI();
         battle.state = Battle.State.SetPool;
+        if (ui.selectedHero != null)
+        {
+            ui.ShowFPPool(true);
+            ui.ShowFPPoolSelectUI(true);
+        }
         do
         {
 

@@ -111,16 +111,12 @@ public class UIManager : MonoBehaviour
         GetComponent<LevelCreator>().CreateGrid(newGridWidth, newGridLength);
     }
 
-    public void ShowFPPool()
+    public void ShowFPPool(bool yes)
     {
         //TO DO: sort FP Pool, both in the List<> and in the Editor hierarchy
-        RefreshFPPool();
-        fPPoolUI.SetActive(true);
-    }
-
-    public void HideFPPool()
-    {
-        fPPoolUI.SetActive(false);
+        if (yes)
+            RefreshFPPool();
+        fPPoolUI.SetActive(yes);
     }
 
     private void RefreshFPPool()
@@ -161,7 +157,6 @@ public class UIManager : MonoBehaviour
 
     public void ClickFPPool(string stat)
     {
-        Debug.Log(stat);
         //TO DO: sama juttu, stringin heittäminen on paska tapa, erityisesti kun se on kovakoodattu onClickin parametriksi
         // se pitäisi tehdä enumilla, ja se onnistuu vain jos Stat muutetaan classiksi
         // https://answers.unity.com/questions/1549639/enum-as-a-function-param-in-a-button-onclick.html
@@ -172,8 +167,6 @@ public class UIManager : MonoBehaviour
                 //TO DO: sortaa lista
                 //Find first occurence of the stat in the list
                 int index = selectedHero.FPPool.FindIndex(x => x.stat.ToString() == stat);
-                Debug.Log(index);
-                Debug.Log(selectedHero.FPPool[index]);
                 if (index != -1)
                 {
                     selectedHero.FPPool.RemoveAt(index);
