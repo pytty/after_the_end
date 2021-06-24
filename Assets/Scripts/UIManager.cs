@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
     public GameObject actionButtonsUI;
     public GameObject actionReadyButton;
 
+    public TMP_Text roundFrameTickText;
+
     public TMP_Dropdown genesSelect;
     public TMP_Dropdown backgroundSelect;
     public TMP_Dropdown levelSelect;
