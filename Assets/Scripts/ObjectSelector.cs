@@ -27,15 +27,19 @@ public class ObjectSelector : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             go = GetClickedObject();
-            if (go != null && go.GetComponent<Square>() != null)
+            /*if (go != null && go.GetComponent<Square>() != null)
                 DeselectObject();
-            else if (go != null && go.GetComponent<Piece>() != null)
+            else*/ if (go != null && go.GetComponent<Piece>() != null)
             {
                 DeselectObject();
                 SelectObject(go);
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+            DeselectObject();
+
+        //TO DO: tää pitää poistaa
         if (Input.GetMouseButtonDown(1))
         {
             if (selectedGameObject)
