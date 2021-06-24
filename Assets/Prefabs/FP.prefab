@@ -269,3 +269,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fp:
     stat: 0
+  statText: {fileID: 8381758868272836730}
+  image: {fileID: 1679679633122527882}

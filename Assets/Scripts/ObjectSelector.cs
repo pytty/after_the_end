@@ -113,6 +113,8 @@ public class ObjectSelector : MonoBehaviour
         uIManager.sheet.gameObject.SetActive(false);
         uIManager.sheet.EmptyCharacterSheet();
 
+        uIManager.HideFPPool();
+
         //deactivate "delete hero" button if battle not started
         if (battleManager.battle.state == Battle.State.Prep)
         {

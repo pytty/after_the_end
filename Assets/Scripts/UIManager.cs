@@ -12,7 +12,10 @@ public class UIManager : MonoBehaviour
     public Hero selectedHero = null;
 
     public UICharacterSheet sheet;
-    public GameObject fPPool;
+    public GameObject fPPoolUI;
+    //TO DO: järkevämpi paikka tälle, ja koolle rajoitus ja alustus tehdään koodissa eikä drag&droppaamalla editorissa
+    public List<FPBehaviour> fPsInFPPool = new List<FPBehaviour>();
+
     public TMP_Dropdown genesSelect;
     public TMP_Dropdown backgroundSelect;
     public TMP_Dropdown levelSelect;
@@ -108,20 +111,24 @@ public class UIManager : MonoBehaviour
     public void ShowFPPool()
     {
         //TO DO: sort FP Pool, both in the List<> and in the Editor hierarchy
-        fPPool.SetActive(true);
+        fPPoolUI.SetActive(true);
         if (selectedHero != null)
         {
-            foreach (FP fp in selectedHero.FPPool)
+            for (int i = 0; i < selectedHero.FPPool.Count; i++)
             {
-
+                fPsInFPPool[i].ChangeType(selectedHero.FPPool[i].stat);
+                fPsInFPPool[i].gameObject.SetActive(true);
             }
         }
     }
 
     public void HideFPPool()
     {
-        fPPool.SetActive(false);
-
+        foreach (FPBehaviour FPB in fPsInFPPool)
+        {
+            FPB.gameObject.SetActive(false);
+        }
+        fPPoolUI.SetActive(false);
     }
 
     public void ShowSetPoolUI()
