@@ -85,8 +85,10 @@ public class ObjectSelector : MonoBehaviour
         selectIndicator.transform.position = go.transform.position;
         selectIndicator.SetActive(true);
 
+        uIManager.selectedHero = selectedGameObject.GetComponent<Piece>().hero;
+
         uIManager.sheet.gameObject.SetActive(true);
-        uIManager.sheet.hero = selectedGameObject.GetComponent<Piece>().hero;
+        uIManager.sheet.hero = uIManager.selectedHero;
         uIManager.sheet.ViewCharacterSheet();
 
         //activate "delete hero" button if battle not started
@@ -105,6 +107,7 @@ public class ObjectSelector : MonoBehaviour
         selectIndicator.SetActive(false);
         selectedGameObject = null;
 
+        uIManager.selectedHero = null;
         uIManager.sheet.gameObject.SetActive(false);
         uIManager.sheet.EmptyCharacterSheet();
 

@@ -15346,6 +15346,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0177d9f127ee2454d82351f337078261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedHero:
+    name: 
+    team: 0
+    maxLevel: 50
+    level: 0
+    maxHP: 0
+    currentHP: 0
+    combatSpeed: 0
+    maxActionPoints: 0
+    currentActionPoints: 0
+    movementInitiativeBonus: 0
+    dodge: 0
+    melee: 0
+    maxFPPoolSize: 8
+    FPPool: []
+    notes: 
   sheet: {fileID: 899858617}
   fPPool: {fileID: 512947545}
   genesSelect: {fileID: 23903323}

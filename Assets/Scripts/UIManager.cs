@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 {
     private HeroGenerator generator;
     private ObjectSelector objectSelector;
+    public Hero selectedHero = null;
 
     public UICharacterSheet sheet;
     public TMP_Dropdown genesSelect;
