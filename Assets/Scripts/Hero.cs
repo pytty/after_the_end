@@ -46,6 +46,10 @@ using UnityEngine;
 
     public int maxFPPoolSize = 8; //TO DO: järkevämpi paikka tälle
     public List<FP> FPPool = new List<FP>();
+
+    public int maxResSize = 4; //TO DO: järkevämpi paikka tälle
+    public List<Resource> resources = new List<Resource>();
+
     public List<CombatCombo> combatCombos = new List<CombatCombo>();
     public string notes;
 
