@@ -40,6 +40,7 @@ public class BattleManager : MonoBehaviour
     {
         //BEFORE BATTLE
         //set pool
+        //ui.ShowSetPoolUI();
         battle.state = Battle.State.SetPool;
         do
         {

@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public Hero selectedHero = null;
 
     public UICharacterSheet sheet;
+    public GameObject fPPool;
     public TMP_Dropdown genesSelect;
     public TMP_Dropdown backgroundSelect;
     public TMP_Dropdown levelSelect;
@@ -102,6 +103,30 @@ public class UIManager : MonoBehaviour
     public void CreateGrid()
     {
         GetComponent<LevelCreator>().CreateGrid(newGridWidth, newGridLength);
+    }
+
+    public void ShowFPPool()
+    {
+        //TO DO: sort FP Pool, both in the List<> and in the Editor hierarchy
+        fPPool.SetActive(true);
+        if (selectedHero != null)
+        {
+            foreach (FP fp in selectedHero.FPPool)
+            {
+
+            }
+        }
+    }
+
+    public void HideFPPool()
+    {
+        fPPool.SetActive(false);
+
+    }
+
+    public void ShowSetPoolUI()
+    {
+
     }
 
     public void ExportCharacterSheet()
