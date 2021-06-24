@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
     //TO DO: järkevämpi paikka tälle, ja koolle rajoitus ja alustus tehdään koodissa eikä drag&droppaamalla editorissa
     public List<FPBehaviour> fPsInFPPool = new List<FPBehaviour>();
     public GameObject fPPoolSelectUI;
+    public GameObject actionButtonsUI;
+    public GameObject actionReadyButton;
 
     public TMP_Dropdown genesSelect;
     public TMP_Dropdown backgroundSelect;
@@ -177,6 +179,24 @@ public class UIManager : MonoBehaviour
                     throw new System.Exception("I AM ERROR.");
                 }
             }
+        }
+    }
+
+    public void ShowActionButtonsUI(bool yes)
+    {
+        actionButtonsUI.SetActive(yes);
+    }
+
+    public void ShowActionReadyButton(bool yes)
+    {
+        actionReadyButton.SetActive(yes);
+    }
+
+    public void ClickActionReadyButton()
+    {
+        if (battleManager.battle.state == Battle.State.SetPool)
+        {
+            battleManager.battle.state = Battle.State.Ready;
         }
     }
 

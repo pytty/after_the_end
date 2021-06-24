@@ -52,9 +52,11 @@ public class BattleManager : MonoBehaviour
         }
         do
         {
-
+            //wait for player to set fp pool
             yield return null;
         } while (battle.state == Battle.State.SetPool);
+        ui.ShowActionReadyButton(false);
+        ui.ShowFPPoolSelectUI(false);
         BattleRound thisRound;
         BattleFrame thisFrame;
         BattleTick thisTick;
