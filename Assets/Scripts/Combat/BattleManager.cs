@@ -46,7 +46,7 @@ public class BattleManager : MonoBehaviour
         {
 
             yield return null;
-        } while (battle.state == Battle.State.SetRes);
+        } while (battle.state == Battle.State.SetPool);
         BattleRound thisRound;
         BattleFrame thisFrame;
         BattleTick thisTick;

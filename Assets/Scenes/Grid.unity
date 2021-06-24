@@ -3292,7 +3292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &247734592
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15876,6 +15876,7 @@ MonoBehaviour:
   - {fileID: 986246626}
   - {fileID: 626881710}
   - {fileID: 1668470702}
+  fPPoolSelectUI: {fileID: 247734591}
   genesSelect: {fileID: 23903323}
   backgroundSelect: {fileID: 189866821}
   levelSelect: {fileID: 996870469}
@@ -19808,7 +19809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1799748640
 RectTransform:
   m_ObjectHideFlags: 0

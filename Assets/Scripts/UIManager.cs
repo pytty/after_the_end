@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject fPPoolUI;
     //TO DO: järkevämpi paikka tälle, ja koolle rajoitus ja alustus tehdään koodissa eikä drag&droppaamalla editorissa
     public List<FPBehaviour> fPsInFPPool = new List<FPBehaviour>();
+    public GameObject fPPoolSelectUI;
 
     public TMP_Dropdown genesSelect;
     public TMP_Dropdown backgroundSelect;
@@ -131,9 +132,9 @@ public class UIManager : MonoBehaviour
         fPPoolUI.SetActive(false);
     }
 
-    public void ShowSetPoolUI()
+    public void ShowFPPoolSelectUI(bool yes)
     {
-
+        fPPoolSelectUI.SetActive(yes);
     }
 
     public void ExportCharacterSheet()

@@ -91,7 +91,16 @@ public class ObjectSelector : MonoBehaviour
         uIManager.sheet.hero = uIManager.selectedHero;
         uIManager.sheet.ViewCharacterSheet();
 
-        uIManager.ShowFPPool();
+
+        if (battleManager.battle.state != Battle.State.Prep)
+        {
+            uIManager.ShowFPPool();
+        }
+
+        if (battleManager.battle.state == Battle.State.SetPool)
+        {
+            uIManager.ShowFPPoolSelectUI(true);
+        }
 
         //activate "delete hero" button if battle not started
         if (battleManager.battle.state == Battle.State.Prep)
@@ -114,6 +123,7 @@ public class ObjectSelector : MonoBehaviour
         uIManager.sheet.EmptyCharacterSheet();
 
         uIManager.HideFPPool();
+        uIManager.ShowFPPoolSelectUI(false);
 
         //deactivate "delete hero" button if battle not started
         if (battleManager.battle.state == Battle.State.Prep)
