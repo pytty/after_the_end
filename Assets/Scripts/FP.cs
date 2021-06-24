@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable] public class FP : MonoBehaviour
+[Serializable] public class FP
 {
     public Hero.Stat stat;
     Color color; //RED STR, BLU AGI, WHI WIL
