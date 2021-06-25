@@ -5,5 +5,5 @@ using UnityEngine;
 
 [Serializable] public class Resource
 {
-    string type;
+    public bool used = false;
 }

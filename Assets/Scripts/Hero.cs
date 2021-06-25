@@ -67,6 +67,11 @@ using UnityEngine;
         this.level = (level < maxLevel) ? level : maxLevel;
     }
 
+    public void ClearResources()
+    {
+        resources.Clear();
+    }
+
     public void GenerateHero(Genes genes)
     {
         //TO DO: tee tästä update tyyppinen versio ja tsekkaa että alifunktiot toimii myös updatevana (ettei tule esim duplikaatteja)

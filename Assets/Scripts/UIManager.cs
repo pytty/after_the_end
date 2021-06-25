@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public List<FPBehaviour> fPsInFPPool = new List<FPBehaviour>();
     public GameObject fPPoolSelectUI;
     public GameObject resourceSelectionUI;
+    public List<Transform> ResInResSelection = new List<Transform>();
     public GameObject actionButtonsUI;
     public GameObject actionReadyButton;
 
@@ -187,9 +188,65 @@ public class UIManager : MonoBehaviour
 
     public void ShowResourceSelectionUI(bool yes)
     {
+        if (yes)
+            RefreshResourceSelection();
         resourceSelectionUI.SetActive(yes);
     }
 
+    private void RefreshResourceSelection()
+    {
+
+        //TO DO: copy paste ylempää
+        //TO DO: hyi hyi hyi!!!
+        foreach (Transform RT in ResInResSelection)
+        {
+            foreach (Transform child in RT)
+            {
+                if (child.name == "FP" || child.name == "RES" || child.name == "EmptyRes Button")
+                {
+                    child.gameObject.SetActive(false);
+                }
+            }
+        }
+        if (selectedHero != null)
+        {
+            //for debugging
+            selectedHero.ClearResources();
+            selectedHero.resources.Add(new FP(Hero.Stat.AGI));
+            selectedHero.resources.Add(new SpecialResource(SpecialResource.SpecialResourceType.MED));
+            selectedHero.resources.Add(new SpecialResource(SpecialResource.SpecialResourceType.MOVE));
+
+            for (int i = 0; i < selectedHero.maxResSize; i++)
+            {
+                if (selectedHero.resources.Count > i)
+                {
+                    if (selectedHero.resources[i] is SpecialResource)
+                    {
+                        Transform trans = ResInResSelection[i].Find("RES");    
+                        trans.GetComponent<ResourceBehaviour>().ChangeType((selectedHero.resources[i] as SpecialResource).type);
+                        trans.gameObject.SetActive(true);
+                            
+                        
+                    }
+                    else if (selectedHero.resources[i] is FP)
+                    {
+                        Transform trans = ResInResSelection[i].Find("FP");
+                        trans.GetComponent<FPBehaviour>().ChangeType((selectedHero.resources[i] as FP).stat);
+                        trans.gameObject.SetActive(true);
+                        
+                    }
+                    else
+                    {
+                        throw new System.Exception("I AM ERROR.");
+                    }
+                }
+                else
+                {
+                    ResInResSelection[i].Find("EmptyRes Button").gameObject.SetActive(true);
+                }
+            }
+        }
+    }
 
     public void ShowActionButtonsUI(bool yes)
     {

@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: FP
+  m_text: RES
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -146,9 +146,9 @@ GameObject:
   - component: {fileID: 4228263718988269741}
   - component: {fileID: 1679679633122527882}
   - component: {fileID: 4991311131990068070}
-  - component: {fileID: 775878395580066738}
+  - component: {fileID: 8401426699002378003}
   m_Layer: 5
-  m_Name: FP
+  m_Name: RES
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &775878395580066738
+--- !u!114 &8401426699002378003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -264,10 +264,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5888653047920120529}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b2ad8fc366f57f4f8d5c81fd72131c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 047a51c8ff388d44e9c4f43d60985760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fp:
-    stat: 0
+  res:
+    type: 0
   statText: {fileID: 8381758868272836730}
   image: {fileID: 1679679633122527882}
