@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     public GameObject fPPoolSelectUI;
     public GameObject resourceSelectionUI;
     public List<Transform> ResInResSelection = new List<Transform>();
+    public RectTransform resSelectionBox;
+    public int resIndex;
     public GameObject actionButtonsUI;
     public GameObject actionReadyButton;
 
@@ -191,11 +193,11 @@ public class UIManager : MonoBehaviour
         if (yes)
             RefreshResourceSelection();
         resourceSelectionUI.SetActive(yes);
+        resSelectionBox.gameObject.SetActive(false);
     }
 
     private void RefreshResourceSelection()
     {
-
         //TO DO: copy paste ylempää
         //TO DO: hyi hyi hyi!!!
         foreach (Transform RT in ResInResSelection)
@@ -210,12 +212,6 @@ public class UIManager : MonoBehaviour
         }
         if (selectedHero != null)
         {
-            //for debugging
-            selectedHero.ClearResources();
-            selectedHero.resources.Add(new FP(Hero.Stat.AGI));
-            selectedHero.resources.Add(new SpecialResource(SpecialResource.SpecialResourceType.MED));
-            selectedHero.resources.Add(new SpecialResource(SpecialResource.SpecialResourceType.MOVE));
-
             for (int i = 0; i < selectedHero.maxResSize; i++)
             {
                 if (selectedHero.resources.Count > i)
@@ -225,8 +221,6 @@ public class UIManager : MonoBehaviour
                         Transform trans = ResInResSelection[i].Find("RES");    
                         trans.GetComponent<ResourceBehaviour>().ChangeType((selectedHero.resources[i] as SpecialResource).type);
                         trans.gameObject.SetActive(true);
-                            
-                        
                     }
                     else if (selectedHero.resources[i] is FP)
                     {
@@ -244,6 +238,57 @@ public class UIManager : MonoBehaviour
                 {
                     ResInResSelection[i].Find("EmptyRes Button").gameObject.SetActive(true);
                 }
+            }
+        }
+    }
+
+    public void ClickResourceSelected(int index)
+    {
+        if (battleManager.battle.state == Battle.State.SetRes)
+        {
+            //TO DO: kovakoodausta
+            resSelectionBox.anchoredPosition =
+                new Vector3(resSelectionBox.anchoredPosition.x, -80.0f - (index * 60.0f));
+            resSelectionBox.gameObject.SetActive(true);
+            resIndex = index;
+        }
+    }
+
+    public void ClickResourceBoxRes(string res)
+    {
+        if (battleManager.battle.state == Battle.State.SetRes)
+        {
+            if (selectedHero != null)
+            {
+                //TO DO: kovakoodausta
+                if (res == "STR" || res == "AGI" || res == "WILL")
+                {
+                    FP newFP = new FP((Hero.Stat)System.Enum.Parse(typeof(Hero.Stat), res));
+                    if (selectedHero.resources.Count > resIndex)
+                        selectedHero.resources[resIndex] = newFP;
+                    else
+                        selectedHero.resources.Add(newFP);
+
+                }
+                else if (res == "MOVE" || res == "MED")
+                {
+                    SpecialResource newRes = new SpecialResource((SpecialResource.SpecialResourceType)System.Enum.Parse(typeof(SpecialResource.SpecialResourceType), res));
+                    if (selectedHero.resources.Count > resIndex)
+                        selectedHero.resources[resIndex] = newRes;
+                    else
+                        selectedHero.resources.Add(newRes);
+                }
+                else if (res == "")
+                {
+                    if (selectedHero.resources.Count > resIndex)
+                        selectedHero.resources.RemoveAt(resIndex);
+                }
+                else
+                {
+                    throw new System.Exception("I AM ERROR.");
+                }
+                RefreshResourceSelection();
+                resSelectionBox.gameObject.SetActive(false);
             }
         }
     }
