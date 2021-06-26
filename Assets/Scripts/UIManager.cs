@@ -173,20 +173,11 @@ public class UIManager : MonoBehaviour
         // https://answers.unity.com/questions/1549639/enum-as-a-function-param-in-a-button-onclick.html
         if (battleManager.battle.state == Battle.State.SetPool)
         {
-            if (selectedHero != null) 
+            if (selectedHero != null)
             {
                 //TO DO: sortaa lista
-                //Find first occurence of the stat in the list
-                int index = selectedHero.FPPool.FindIndex(x => x.stat.ToString() == stat);
-                if (index != -1)
-                {
-                    selectedHero.FPPool.RemoveAt(index);
-                    RefreshFPPool();
-                }
-                else
-                {
-                    throw new System.Exception("I AM ERROR.");
-                }
+                selectedHero.RemoveFromFPPool((Hero.Stat)System.Enum.Parse(typeof(Hero.Stat), stat));
+                RefreshFPPool();
             }
         }
     }
@@ -300,28 +291,103 @@ public class UIManager : MonoBehaviour
         {
             if (selectedHero != null)
             {
+                //if new res is FP
                 //TO DO: kovakoodausta
                 if (res == "STR" || res == "AGI" || res == "WILL")
                 {
-                    FP newFP = new FP((Hero.Stat)System.Enum.Parse(typeof(Hero.Stat), res));
-                    if (selectedHero.resources.Count > resIndex)
-                        selectedHero.resources[resIndex] = newFP;
+                    Hero.Stat newStat = (Hero.Stat)System.Enum.Parse(typeof(Hero.Stat), res);
+                    //if said FP is available in FPPool
+                    if (selectedHero.FPPool.Exists(item => item.stat == newStat))
+                    {
+                        FP newFP = new FP(newStat);
+                        //remove from FPPool
+                        selectedHero.RemoveFromFPPool(newStat);
+                        RefreshFPPool();
+                        //if res spot was occupied, change the old resource
+                        if (selectedHero.resources.Count > resIndex)
+                        {
+                            //if released RES was FP
+                            if (selectedHero.resources[resIndex] is FP)
+                            {
+                                //if there's space in FP Pool
+                                if (selectedHero.FPPool.Count < selectedHero.maxFPPoolSize)
+                                    //return it to FP Pool
+                                    selectedHero.FPPool.Add(selectedHero.resources[resIndex] as FP);
+                                else
+                                    //otherwise give warning that FP was lost
+                                    //this shouldn't happen though?
+                                    Debug.Log("FP was lost");
+                                RefreshFPPool();
+                            }
+
+                            //change the resource
+                            selectedHero.resources[resIndex] = newFP;
+                        }
+                        else
+                        { 
+                            //or add new resource
+                            selectedHero.resources.Add(newFP);
+                        }
+                    }
                     else
-                        selectedHero.resources.Add(newFP);
+                    {
+                        //don't change anything, give warning instead
+                        //TO DO: give warning
+                        Debug.Log("That FP is not available in your FP Pool.");
+                    }
 
                 }
+                //if new res is special resource
                 else if (res == "MOVE" || res == "MED")
                 {
                     SpecialResource newRes = new SpecialResource((SpecialResource.SpecialResourceType)System.Enum.Parse(typeof(SpecialResource.SpecialResourceType), res));
+                    //if res spot was occupied, change the old resource
                     if (selectedHero.resources.Count > resIndex)
+                    {
+                        //if released RES was FP
+                        if (selectedHero.resources[resIndex] is FP)
+                        {
+                            //if there's space in FP Pool
+                            if (selectedHero.FPPool.Count < selectedHero.maxFPPoolSize)
+                                //return it to FP Pool
+                                selectedHero.FPPool.Add(selectedHero.resources[resIndex] as FP);
+                            else
+                                //otherwise give warning that FP was lost
+                                //this shouldn't happen though?
+                                Debug.Log("FP was lost");
+                            RefreshFPPool();
+                        }
+
+                        //change the resource
                         selectedHero.resources[resIndex] = newRes;
+                    }
                     else
+                    {
+                        //or add new resource
                         selectedHero.resources.Add(newRes);
+                    }
                 }
                 else if (res == "")
                 {
+                    //if res spot was occupied, change the old resource
                     if (selectedHero.resources.Count > resIndex)
+                    {
+                        //if released RES was FP
+                        if (selectedHero.resources[resIndex] is FP)
+                        {
+                            //if there's space in FP Pool
+                            if (selectedHero.FPPool.Count < selectedHero.maxFPPoolSize)
+                                //return it to FP Pool
+                                selectedHero.FPPool.Add(selectedHero.resources[resIndex] as FP);
+                            else
+                                //otherwise give warning that FP was lost
+                                //this shouldn't happen though?
+                                Debug.Log("FP was lost");
+                            RefreshFPPool();
+                        }
+
                         selectedHero.resources.RemoveAt(resIndex);
+                    }
                 }
                 else
                 {

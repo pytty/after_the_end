@@ -67,6 +67,21 @@ using UnityEngine;
         this.level = (level < maxLevel) ? level : maxLevel;
     }
 
+    public void RemoveFromFPPool(Stat stat)
+    {
+        //TO DO: sortaa lista
+        //Find first occurence of the stat in the list
+        int index = FPPool.FindIndex(x => x.stat == stat);
+        if (index != -1)
+        {
+            FPPool.RemoveAt(index);
+        }
+        else
+        {
+            throw new System.Exception("I AM ERROR.");
+        }
+    }
+
     public void ClearResources()
     {
         resources.Clear();
