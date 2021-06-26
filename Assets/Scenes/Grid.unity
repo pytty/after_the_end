@@ -19409,6 +19409,9 @@ MonoBehaviour:
   - {fileID: 417146792}
   - {fileID: 146201270}
   resSelectionBox: {fileID: 1249650605}
+  resSelectionInfoText: {fileID: 1697365631}
+  resSelectionCombatSpeedBonus: {fileID: 508543462}
+  resSelectionInitiativeTotal: {fileID: 430170362}
   actionButtonsUI: {fileID: 21027633}
   actionReadyButton: {fileID: 1803436980}
   roundFrameTickText: {fileID: 1074264630}

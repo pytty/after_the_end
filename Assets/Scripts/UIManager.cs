@@ -20,7 +20,10 @@ public class UIManager : MonoBehaviour
     public GameObject resourceSelectionUI;
     public List<Transform> ResInResSelection = new List<Transform>();
     public RectTransform resSelectionBox;
-    public int resIndex;
+    public TMP_Text resSelectionInfoText;
+    public TMP_Text resSelectionCombatSpeedBonus;
+    public TMP_Text resSelectionInitiativeTotal;
+    private int resIndex;
     public GameObject actionButtonsUI;
     public GameObject actionReadyButton;
 
@@ -198,8 +201,11 @@ public class UIManager : MonoBehaviour
 
     private void RefreshResourceSelection()
     {
+        int initiative = 0;
+
         //TO DO: copy paste ylempää
         //TO DO: hyi hyi hyi!!!
+        //TO DO: vaikka tää on ihan ok niin ainaki voi refactoroida, DRY
         foreach (Transform RT in ResInResSelection)
         {
             foreach (Transform child in RT)
@@ -212,6 +218,8 @@ public class UIManager : MonoBehaviour
         }
         if (selectedHero != null)
         {
+            resSelectionInfoText.text = "Choose " + selectedHero.name + "'s Resources for the next Frame:";
+
             for (int i = 0; i < selectedHero.maxResSize; i++)
             {
                 if (selectedHero.resources.Count > i)
@@ -221,13 +229,31 @@ public class UIManager : MonoBehaviour
                         Transform trans = ResInResSelection[i].Find("RES");    
                         trans.GetComponent<ResourceBehaviour>().ChangeType((selectedHero.resources[i] as SpecialResource).type);
                         trans.gameObject.SetActive(true);
+
+                        int bonus;
+                        if (((selectedHero.resources[i] as SpecialResource).type) == SpecialResource.SpecialResourceType.MED)
+                            bonus = 0;
+                        else if (((selectedHero.resources[i] as SpecialResource).type) == SpecialResource.SpecialResourceType.MOVE)
+                            bonus = selectedHero.movementInitiativeBonus;
+                        else
+                            throw new System.Exception("I AM ERROR.");
+                        ResInResSelection[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = "+" + bonus;
+                        initiative += bonus;
                     }
                     else if (selectedHero.resources[i] is FP)
                     {
+                        Hero.Stat stat = (selectedHero.resources[i] as FP).stat;
+
                         Transform trans = ResInResSelection[i].Find("FP");
-                        trans.GetComponent<FPBehaviour>().ChangeType((selectedHero.resources[i] as FP).stat);
+                        trans.GetComponent<FPBehaviour>().ChangeType(stat);
                         trans.gameObject.SetActive(true);
-                        
+
+                        int bonus = GameRules.initiativeStatBonuses[stat];
+                        initiative += bonus;
+
+                        string symbol = (bonus >= 0 ? "+" : "-");
+                        ResInResSelection[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = symbol + bonus;
+
                     }
                     else
                     {
@@ -237,9 +263,23 @@ public class UIManager : MonoBehaviour
                 else
                 {
                     ResInResSelection[i].Find("EmptyRes Button").gameObject.SetActive(true);
+                    ResInResSelection[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = "+0";
+                    //initiative += 0;
                 }
             }
+            initiative += (int)Mathf.Round(selectedHero.combatSpeed);
+            resSelectionCombatSpeedBonus.text = "+" + (int)Mathf.Round(selectedHero.combatSpeed) + " Combat Speed";
         }
+        string rank = "";
+        foreach(KeyValuePair<int, string> entry in GameRules.initiativeRankLowerThresholds)
+        {
+            if (initiative >= entry.Key)
+                rank = entry.Value;
+            else
+                break;
+        }
+        resSelectionInitiativeTotal.text = "Total: " + initiative + "\n" +
+            "Rank: " + rank;
     }
 
     public void ClickResourceSelected(int index)
