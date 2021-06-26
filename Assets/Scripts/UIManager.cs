@@ -16,7 +16,16 @@ public class UIManager : MonoBehaviour
     public GameObject fPPoolUI;
     //TO DO: järkevämpi paikka tälle, ja koolle rajoitus ja alustus tehdään koodissa eikä drag&droppaamalla editorissa
     public List<FPBehaviour> fPsInFPPool = new List<FPBehaviour>();
-    public GameObject fPPoolSelectUI;
+    public GameObject fPPoolSelUI;
+    public GameObject resSelUI;
+    public List<Transform> resInResSelUI = new List<Transform>();
+    public RectTransform resSelBox;
+    public TMP_Text resSelInfoText;
+    public TMP_Text resSelCSBonusText;
+    public TMP_Text resSelITotalText;
+    private int resIndex;
+    public GameObject resUI;
+    public List<Transform> resInResUI = new List<Transform>();
     public GameObject actionButtonsUI;
     public GameObject actionReadyButton;
 
@@ -141,7 +150,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowFPPoolSelectUI(bool yes)
     {
-        fPPoolSelectUI.SetActive(yes);
+        fPPoolSelUI.SetActive(yes);
     }
 
     public void ClickFPPoolSelect(string stat)
@@ -166,20 +175,232 @@ public class UIManager : MonoBehaviour
         // https://answers.unity.com/questions/1549639/enum-as-a-function-param-in-a-button-onclick.html
         if (battleManager.battle.state == Battle.State.SetPool)
         {
-            if (selectedHero != null) 
+            if (selectedHero != null)
             {
                 //TO DO: sortaa lista
-                //Find first occurence of the stat in the list
-                int index = selectedHero.FPPool.FindIndex(x => x.stat.ToString() == stat);
-                if (index != -1)
+                selectedHero.RemoveFromFPPool((Hero.Stat)System.Enum.Parse(typeof(Hero.Stat), stat));
+                RefreshFPPool();
+            }
+        }
+    }
+
+    public void ShowResourceSelectionUI(bool yes)
+    {
+        if (yes)
+            RefreshResourceSelection();
+        resSelUI.SetActive(yes);
+        resSelBox.gameObject.SetActive(false);
+    }
+
+    private void RefreshResourceSelection()
+    {
+        int initiative = 0;
+
+        //TO DO: copy paste ylempää
+        //TO DO: hyi hyi hyi!!!
+        //TO DO: vaikka tää on ihan ok niin ainaki voi refactoroida, DRY
+        foreach (Transform RT in resInResSelUI)
+        {
+            foreach (Transform child in RT)
+            {
+                if (child.name == "FP" || child.name == "RES" || child.name == "EmptyRes Button" || child.name == "Unavailable")
                 {
-                    selectedHero.FPPool.RemoveAt(index);
-                    RefreshFPPool();
+                    child.gameObject.SetActive(false);
+                }
+            }
+        }
+        if (selectedHero != null)
+        {
+            resSelInfoText.text = "Choose " + selectedHero.name + "'s Resources for the next Frame:";
+
+            for (int i = 0; i < selectedHero.maxResSize; i++)
+            {
+                if (selectedHero.resources.Count > i)
+                {
+                    if (selectedHero.resources[i] is SpecialResource)
+                    {
+                        Transform trans = resInResSelUI[i].Find("RES");    
+                        trans.GetComponent<ResourceBehaviour>().ChangeType((selectedHero.resources[i] as SpecialResource).type);
+                        trans.gameObject.SetActive(true);
+
+                        int bonus;
+                        if (((selectedHero.resources[i] as SpecialResource).type) == SpecialResource.SpecialResourceType.MED)
+                            bonus = 0;
+                        else if (((selectedHero.resources[i] as SpecialResource).type) == SpecialResource.SpecialResourceType.MOVE)
+                            bonus = selectedHero.movementInitiativeBonus;
+                        else
+                            throw new System.Exception("I AM ERROR.");
+                        resInResSelUI[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = "+" + bonus;
+                        initiative += bonus;
+                    }
+                    else if (selectedHero.resources[i] is FP)
+                    {
+                        Hero.Stat stat = (selectedHero.resources[i] as FP).stat;
+
+                        Transform trans = resInResSelUI[i].Find("FP");
+                        trans.GetComponent<FPBehaviour>().ChangeType(stat);
+                        trans.gameObject.SetActive(true);
+
+                        int bonus = GameRules.initiativeStatBonuses[stat];
+                        initiative += bonus;
+
+                        string symbol = (bonus >= 0 ? "+" : "-");
+                        resInResSelUI[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = symbol + bonus;
+
+                    }
+                    else
+                    {
+                        throw new System.Exception("I AM ERROR.");
+                    }
+                }
+                else
+                {
+                    if (selectedHero.currentActionPoints > i)
+                        resInResSelUI[i].Find("EmptyRes Button").gameObject.SetActive(true);
+                    else
+                        resInResSelUI[i].Find("Unavailable").gameObject.SetActive(true);
+
+                    resInResSelUI[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = "+0";
+                    //initiative += 0;
+                }
+            }
+            initiative += (int)Mathf.Round(selectedHero.combatSpeed);
+            resSelCSBonusText.text = "+" + (int)Mathf.Round(selectedHero.combatSpeed) + " Combat Speed";
+        }
+        string rank = "";
+        foreach(KeyValuePair<int, string> entry in GameRules.initiativeRankLowerThresholds)
+        {
+            if (initiative >= entry.Key)
+                rank = entry.Value;
+            else
+                break;
+        }
+        resSelITotalText.text = "Total: " + initiative + "\n" +
+            "Rank: " + rank;
+    }
+
+    public void ClickResourceSelected(int index)
+    {
+        if (battleManager.battle.state == Battle.State.SetRes)
+        {
+            //TO DO: kovakoodausta
+            resSelBox.anchoredPosition =
+                new Vector3(resSelBox.anchoredPosition.x, -80.0f - (index * 60.0f));
+            resSelBox.gameObject.SetActive(true);
+            resIndex = index;
+        }
+    }
+
+    public void ClickResourceBoxRes(string res)
+    {
+        if (battleManager.battle.state == Battle.State.SetRes)
+        {
+            if (selectedHero != null)
+            {
+                //if new res is FP
+                //TO DO: kovakoodausta
+                if (res == "STR" || res == "AGI" || res == "WILL")
+                {
+                    Hero.Stat newStat = (Hero.Stat)System.Enum.Parse(typeof(Hero.Stat), res);
+                    //if said FP is available in FPPool
+                    if (selectedHero.FPPool.Exists(item => item.stat == newStat))
+                    {
+                        FP newFP = new FP(newStat);
+                        //remove from FPPool
+                        selectedHero.RemoveFromFPPool(newStat);
+                        RefreshFPPool();
+                        //if res spot was occupied, change the old resource
+                        if (selectedHero.resources.Count > resIndex)
+                        {
+                            //if released RES was FP
+                            if (selectedHero.resources[resIndex] is FP)
+                            {
+                                //if there's space in FP Pool
+                                if (selectedHero.FPPool.Count < selectedHero.maxFPPoolSize)
+                                    //return it to FP Pool
+                                    selectedHero.FPPool.Add(selectedHero.resources[resIndex] as FP);
+                                else
+                                    //otherwise give warning that FP was lost
+                                    //this shouldn't happen though?
+                                    Debug.Log("FP was lost");
+                                RefreshFPPool();
+                            }
+
+                            //change the resource
+                            selectedHero.resources[resIndex] = newFP;
+                        }
+                        else
+                        { 
+                            //or add new resource
+                            selectedHero.resources.Add(newFP);
+                        }
+                    }
+                    else
+                    {
+                        //don't change anything, give warning instead
+                        //TO DO: give warning
+                        Debug.Log("That FP is not available in your FP Pool.");
+                    }
+
+                }
+                //if new res is special resource
+                else if (res == "MOVE" || res == "MED")
+                {
+                    SpecialResource newRes = new SpecialResource((SpecialResource.SpecialResourceType)System.Enum.Parse(typeof(SpecialResource.SpecialResourceType), res));
+                    //if res spot was occupied, change the old resource
+                    if (selectedHero.resources.Count > resIndex)
+                    {
+                        //if released RES was FP
+                        if (selectedHero.resources[resIndex] is FP)
+                        {
+                            //if there's space in FP Pool
+                            if (selectedHero.FPPool.Count < selectedHero.maxFPPoolSize)
+                                //return it to FP Pool
+                                selectedHero.FPPool.Add(selectedHero.resources[resIndex] as FP);
+                            else
+                                //otherwise give warning that FP was lost
+                                //this shouldn't happen though?
+                                Debug.Log("FP was lost");
+                            RefreshFPPool();
+                        }
+
+                        //change the resource
+                        selectedHero.resources[resIndex] = newRes;
+                    }
+                    else
+                    {
+                        //or add new resource
+                        selectedHero.resources.Add(newRes);
+                    }
+                }
+                else if (res == "")
+                {
+                    //if res spot was occupied, change the old resource
+                    if (selectedHero.resources.Count > resIndex)
+                    {
+                        //if released RES was FP
+                        if (selectedHero.resources[resIndex] is FP)
+                        {
+                            //if there's space in FP Pool
+                            if (selectedHero.FPPool.Count < selectedHero.maxFPPoolSize)
+                                //return it to FP Pool
+                                selectedHero.FPPool.Add(selectedHero.resources[resIndex] as FP);
+                            else
+                                //otherwise give warning that FP was lost
+                                //this shouldn't happen though?
+                                Debug.Log("FP was lost");
+                            RefreshFPPool();
+                        }
+
+                        selectedHero.resources.RemoveAt(resIndex);
+                    }
                 }
                 else
                 {
                     throw new System.Exception("I AM ERROR.");
                 }
+                RefreshResourceSelection();
+                resSelBox.gameObject.SetActive(false);
             }
         }
     }
@@ -197,6 +418,10 @@ public class UIManager : MonoBehaviour
     public void ClickActionReadyButton()
     {
         if (battleManager.battle.state == Battle.State.SetPool)
+        {
+            battleManager.battle.state = Battle.State.Ready;
+        }
+        else if (battleManager.battle.state == Battle.State.SetRes)
         {
             battleManager.battle.state = Battle.State.Ready;
         }

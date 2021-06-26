@@ -106,6 +106,11 @@ public class ObjectSelector : MonoBehaviour
             uIManager.ShowFPPoolSelectUI(true);
         }
 
+        if (battleManager.battle.state == Battle.State.SetRes)
+        {
+            uIManager.ShowResourceSelectionUI(true);
+        }
+
         //activate "delete hero" button if battle not started
         if (battleManager.battle.state == Battle.State.Prep)
         {
@@ -128,6 +133,7 @@ public class ObjectSelector : MonoBehaviour
 
         uIManager.ShowFPPool(false);
         uIManager.ShowFPPoolSelectUI(false);
+        uIManager.ShowResourceSelectionUI(false);
 
         //deactivate "delete hero" button if battle not started
         if (battleManager.battle.state == Battle.State.Prep)

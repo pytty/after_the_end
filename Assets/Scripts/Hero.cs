@@ -46,6 +46,10 @@ using UnityEngine;
 
     public int maxFPPoolSize = 8; //TO DO: järkevämpi paikka tälle
     public List<FP> FPPool = new List<FP>();
+
+    public int maxResSize = 4; //TO DO: järkevämpi paikka tälle
+    public List<Resource> resources = new List<Resource>();
+
     public List<CombatCombo> combatCombos = new List<CombatCombo>();
     public string notes;
 
@@ -61,6 +65,26 @@ using UnityEngine;
         this.name = name;
         this.background = background;
         this.level = (level < maxLevel) ? level : maxLevel;
+    }
+
+    public void RemoveFromFPPool(Stat stat)
+    {
+        //TO DO: sortaa lista
+        //Find first occurence of the stat in the list
+        int index = FPPool.FindIndex(x => x.stat == stat);
+        if (index != -1)
+        {
+            FPPool.RemoveAt(index);
+        }
+        else
+        {
+            throw new System.Exception("I AM ERROR.");
+        }
+    }
+
+    public void ClearResources()
+    {
+        resources.Clear();
     }
 
     public void GenerateHero(Genes genes)

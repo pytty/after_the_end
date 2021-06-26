@@ -48,45 +48,58 @@ public class BattleManager : MonoBehaviour
         //BEFORE BATTLE
         //set pool
         battle.state = Battle.State.SetPool;
-        ui.ShowActionButtonsUI(true);
-        ui.ShowActionReadyButton(true);
         if (ui.selectedHero != null && selector.selectedGameObject != null && selector.selectedGameObject.GetComponent<Piece>().hero != null)
         {
             ui.ShowFPPool(true);
             ui.ShowFPPoolSelectUI(true);
         }
+        ui.ShowActionButtonsUI(true);
+        ui.ShowActionReadyButton(true);
         do
         {
             //wait for player to set fp pool
             yield return null;
         } while (battle.state == Battle.State.SetPool);
-        ui.ShowActionReadyButton(false);
         ui.ShowFPPoolSelectUI(false);
+        ui.ShowActionReadyButton(false);
+
         BattleRound thisRound;
         BattleFrame thisFrame;
         BattleTick thisTick;
         BattleTurn thisTurn;
+
         do
         {
             //BEGIN ROUND
             battle.state = Battle.State.Wait;
             battle.rounds.Add(new BattleRound());
             thisRound = battle.rounds[battle.roundIndex];
+
             do
             {
                 //BEGIN FRAME
                 battle.state = Battle.State.Wait;
                 thisRound.frames.Add(new BattleFrame());
                 thisFrame = thisRound.frames[thisRound.frameIndex];
+
                 //set resources for each character, 0-4/remaining APs
                 battle.state = Battle.State.SetRes;
+                if (ui.selectedHero != null && selector.selectedGameObject != null && selector.selectedGameObject.GetComponent<Piece>().hero != null)
+                {
+                    ui.ShowResourceSelectionUI(true);
+                }
+                ui.ShowActionButtonsUI(true);
+                ui.ShowActionReadyButton(true);
                 do
                 {
                     //wait for player to set resources
+                    //different resources are:
+                    //red (STR FP), blue (AGI FP), white (WILL FP), green (MP), yellow (meditate)
                     yield return null;
                 } while (battle.state == Battle.State.SetRes);
-                //different resources are:
-                //red (STR FP), blue (AGI FP), white (WILL FP), green (MP), yellow (meditate)
+                ui.ShowResourceSelectionUI(false);
+                ui.ShowActionReadyButton(false);
+
                 do
                 {
                     //BEGIN TICK
