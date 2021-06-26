@@ -201,7 +201,7 @@ public class UIManager : MonoBehaviour
         {
             foreach (Transform child in RT)
             {
-                if (child.name == "FP" || child.name == "RES" || child.name == "EmptyRes Button")
+                if (child.name == "FP" || child.name == "RES" || child.name == "EmptyRes Button" || child.name == "Unavailable")
                 {
                     child.gameObject.SetActive(false);
                 }
@@ -253,7 +253,11 @@ public class UIManager : MonoBehaviour
                 }
                 else
                 {
-                    ResInResSelection[i].Find("EmptyRes Button").gameObject.SetActive(true);
+                    if (selectedHero.currentActionPoints > i)
+                        ResInResSelection[i].Find("EmptyRes Button").gameObject.SetActive(true);
+                    else
+                        ResInResSelection[i].Find("Unavailable").gameObject.SetActive(true);
+
                     ResInResSelection[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = "+0";
                     //initiative += 0;
                 }
