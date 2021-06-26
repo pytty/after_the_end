@@ -20111,17 +20111,19 @@ MonoBehaviour:
   - {fileID: 986246626}
   - {fileID: 626881710}
   - {fileID: 1668470702}
-  fPPoolSelectUI: {fileID: 247734591}
-  resourceSelectionUI: {fileID: 346483819}
-  ResInResSelection:
+  fPPoolSelUI: {fileID: 247734591}
+  resSelUI: {fileID: 346483819}
+  resInResSelUI:
   - {fileID: 891531469}
   - {fileID: 88156642}
   - {fileID: 417146792}
   - {fileID: 146201270}
-  resSelectionBox: {fileID: 1249650605}
-  resSelectionInfoText: {fileID: 1697365631}
-  resSelectionCombatSpeedBonus: {fileID: 508543462}
-  resSelectionInitiativeTotal: {fileID: 430170362}
+  resSelBox: {fileID: 1249650605}
+  resSelInfoText: {fileID: 1697365631}
+  resSelCSBonusText: {fileID: 508543462}
+  resSelITotalText: {fileID: 430170362}
+  resUI: {fileID: 1587859931}
+  resInResUI: []
   actionButtonsUI: {fileID: 21027633}
   actionReadyButton: {fileID: 1803436980}
   roundFrameTickText: {fileID: 1074264630}

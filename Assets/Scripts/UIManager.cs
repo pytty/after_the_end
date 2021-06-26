@@ -16,14 +16,16 @@ public class UIManager : MonoBehaviour
     public GameObject fPPoolUI;
     //TO DO: järkevämpi paikka tälle, ja koolle rajoitus ja alustus tehdään koodissa eikä drag&droppaamalla editorissa
     public List<FPBehaviour> fPsInFPPool = new List<FPBehaviour>();
-    public GameObject fPPoolSelectUI;
-    public GameObject resourceSelectionUI;
-    public List<Transform> ResInResSelection = new List<Transform>();
-    public RectTransform resSelectionBox;
-    public TMP_Text resSelectionInfoText;
-    public TMP_Text resSelectionCombatSpeedBonus;
-    public TMP_Text resSelectionInitiativeTotal;
+    public GameObject fPPoolSelUI;
+    public GameObject resSelUI;
+    public List<Transform> resInResSelUI = new List<Transform>();
+    public RectTransform resSelBox;
+    public TMP_Text resSelInfoText;
+    public TMP_Text resSelCSBonusText;
+    public TMP_Text resSelITotalText;
     private int resIndex;
+    public GameObject resUI;
+    public List<Transform> resInResUI = new List<Transform>();
     public GameObject actionButtonsUI;
     public GameObject actionReadyButton;
 
@@ -148,7 +150,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowFPPoolSelectUI(bool yes)
     {
-        fPPoolSelectUI.SetActive(yes);
+        fPPoolSelUI.SetActive(yes);
     }
 
     public void ClickFPPoolSelect(string stat)
@@ -186,8 +188,8 @@ public class UIManager : MonoBehaviour
     {
         if (yes)
             RefreshResourceSelection();
-        resourceSelectionUI.SetActive(yes);
-        resSelectionBox.gameObject.SetActive(false);
+        resSelUI.SetActive(yes);
+        resSelBox.gameObject.SetActive(false);
     }
 
     private void RefreshResourceSelection()
@@ -197,7 +199,7 @@ public class UIManager : MonoBehaviour
         //TO DO: copy paste ylempää
         //TO DO: hyi hyi hyi!!!
         //TO DO: vaikka tää on ihan ok niin ainaki voi refactoroida, DRY
-        foreach (Transform RT in ResInResSelection)
+        foreach (Transform RT in resInResSelUI)
         {
             foreach (Transform child in RT)
             {
@@ -209,7 +211,7 @@ public class UIManager : MonoBehaviour
         }
         if (selectedHero != null)
         {
-            resSelectionInfoText.text = "Choose " + selectedHero.name + "'s Resources for the next Frame:";
+            resSelInfoText.text = "Choose " + selectedHero.name + "'s Resources for the next Frame:";
 
             for (int i = 0; i < selectedHero.maxResSize; i++)
             {
@@ -217,7 +219,7 @@ public class UIManager : MonoBehaviour
                 {
                     if (selectedHero.resources[i] is SpecialResource)
                     {
-                        Transform trans = ResInResSelection[i].Find("RES");    
+                        Transform trans = resInResSelUI[i].Find("RES");    
                         trans.GetComponent<ResourceBehaviour>().ChangeType((selectedHero.resources[i] as SpecialResource).type);
                         trans.gameObject.SetActive(true);
 
@@ -228,14 +230,14 @@ public class UIManager : MonoBehaviour
                             bonus = selectedHero.movementInitiativeBonus;
                         else
                             throw new System.Exception("I AM ERROR.");
-                        ResInResSelection[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = "+" + bonus;
+                        resInResSelUI[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = "+" + bonus;
                         initiative += bonus;
                     }
                     else if (selectedHero.resources[i] is FP)
                     {
                         Hero.Stat stat = (selectedHero.resources[i] as FP).stat;
 
-                        Transform trans = ResInResSelection[i].Find("FP");
+                        Transform trans = resInResSelUI[i].Find("FP");
                         trans.GetComponent<FPBehaviour>().ChangeType(stat);
                         trans.gameObject.SetActive(true);
 
@@ -243,7 +245,7 @@ public class UIManager : MonoBehaviour
                         initiative += bonus;
 
                         string symbol = (bonus >= 0 ? "+" : "-");
-                        ResInResSelection[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = symbol + bonus;
+                        resInResSelUI[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = symbol + bonus;
 
                     }
                     else
@@ -254,16 +256,16 @@ public class UIManager : MonoBehaviour
                 else
                 {
                     if (selectedHero.currentActionPoints > i)
-                        ResInResSelection[i].Find("EmptyRes Button").gameObject.SetActive(true);
+                        resInResSelUI[i].Find("EmptyRes Button").gameObject.SetActive(true);
                     else
-                        ResInResSelection[i].Find("Unavailable").gameObject.SetActive(true);
+                        resInResSelUI[i].Find("Unavailable").gameObject.SetActive(true);
 
-                    ResInResSelection[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = "+0";
+                    resInResSelUI[i].Find("Text (TMP)").GetComponent<TMP_Text>().text = "+0";
                     //initiative += 0;
                 }
             }
             initiative += (int)Mathf.Round(selectedHero.combatSpeed);
-            resSelectionCombatSpeedBonus.text = "+" + (int)Mathf.Round(selectedHero.combatSpeed) + " Combat Speed";
+            resSelCSBonusText.text = "+" + (int)Mathf.Round(selectedHero.combatSpeed) + " Combat Speed";
         }
         string rank = "";
         foreach(KeyValuePair<int, string> entry in GameRules.initiativeRankLowerThresholds)
@@ -273,7 +275,7 @@ public class UIManager : MonoBehaviour
             else
                 break;
         }
-        resSelectionInitiativeTotal.text = "Total: " + initiative + "\n" +
+        resSelITotalText.text = "Total: " + initiative + "\n" +
             "Rank: " + rank;
     }
 
@@ -282,9 +284,9 @@ public class UIManager : MonoBehaviour
         if (battleManager.battle.state == Battle.State.SetRes)
         {
             //TO DO: kovakoodausta
-            resSelectionBox.anchoredPosition =
-                new Vector3(resSelectionBox.anchoredPosition.x, -80.0f - (index * 60.0f));
-            resSelectionBox.gameObject.SetActive(true);
+            resSelBox.anchoredPosition =
+                new Vector3(resSelBox.anchoredPosition.x, -80.0f - (index * 60.0f));
+            resSelBox.gameObject.SetActive(true);
             resIndex = index;
         }
     }
@@ -398,7 +400,7 @@ public class UIManager : MonoBehaviour
                     throw new System.Exception("I AM ERROR.");
                 }
                 RefreshResourceSelection();
-                resSelectionBox.gameObject.SetActive(false);
+                resSelBox.gameObject.SetActive(false);
             }
         }
     }
