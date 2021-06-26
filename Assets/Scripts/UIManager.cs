@@ -184,15 +184,15 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowResourceSelectionUI(bool yes)
+    public void ShowResSelUI(bool yes)
     {
         if (yes)
-            RefreshResourceSelection();
+            RefreshResSelUI();
         resSelUI.SetActive(yes);
         resSelBox.gameObject.SetActive(false);
     }
 
-    private void RefreshResourceSelection()
+    private void RefreshResSelUI()
     {
         int initiative = 0;
 
@@ -399,8 +399,57 @@ public class UIManager : MonoBehaviour
                 {
                     throw new System.Exception("I AM ERROR.");
                 }
-                RefreshResourceSelection();
+                RefreshResSelUI();
+                RefreshResUI();
                 resSelBox.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void ShowResUI(bool yes)
+    {
+        if (yes)
+            RefreshResUI();
+        resUI.SetActive(yes);
+    }
+
+    public void RefreshResUI()
+    {
+        //TO DO: copy paste ylempää
+        //TO DO: hyi hyi hyi!!!
+        //TO DO: vaikka tää on ihan ok niin ainaki voi refactoroida, DRY
+        foreach (Transform RT in resInResUI)
+        {
+            foreach (Transform child in RT)
+            {
+                if (child.name == "FP" || child.name == "RES")
+                {
+                    child.gameObject.SetActive(false);
+                }
+            }
+        }
+        if (selectedHero != null)
+        {
+            for (int i = 0; i < selectedHero.resources.Count; i++)
+            {
+                if (selectedHero.resources[i] is SpecialResource)
+                {
+                    Transform trans = resInResUI[i].Find("RES");
+                    trans.GetComponent<ResourceBehaviour>().ChangeType((selectedHero.resources[i] as SpecialResource).type);
+                    trans.gameObject.SetActive(true);
+                }
+                else if (selectedHero.resources[i] is FP)
+                {
+                    Hero.Stat stat = (selectedHero.resources[i] as FP).stat;
+
+                    Transform trans = resInResUI[i].Find("FP");
+                    trans.GetComponent<FPBehaviour>().ChangeType(stat);
+                    trans.gameObject.SetActive(true);
+                }
+                else
+                {
+                    throw new System.Exception("I AM ERROR.");
+                }
             }
         }
     }

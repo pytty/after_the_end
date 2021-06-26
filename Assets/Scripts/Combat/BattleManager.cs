@@ -86,7 +86,7 @@ public class BattleManager : MonoBehaviour
                 battle.state = Battle.State.SetRes;
                 if (ui.selectedHero != null && selector.selectedGameObject != null && selector.selectedGameObject.GetComponent<Piece>().hero != null)
                 {
-                    ui.ShowResourceSelectionUI(true);
+                    ui.ShowResSelUI(true);
                 }
                 ui.ShowActionButtonsUI(true);
                 ui.ShowActionReadyButton(true);
@@ -97,7 +97,7 @@ public class BattleManager : MonoBehaviour
                     //red (STR FP), blue (AGI FP), white (WILL FP), green (MP), yellow (meditate)
                     yield return null;
                 } while (battle.state == Battle.State.SetRes);
-                ui.ShowResourceSelectionUI(false);
+                ui.ShowResSelUI(false);
                 ui.ShowActionReadyButton(false);
 
                 do
@@ -116,6 +116,11 @@ public class BattleManager : MonoBehaviour
                         thisTurn = thisTick.turns[thisTick.turnIndex];
                         //character can execute 1 action on his/her turn by selecting a resource
                         battle.state = Battle.State.GiveOrd;
+                        if (ui.selectedHero != null && selector.selectedGameObject != null && selector.selectedGameObject.GetComponent<Piece>().hero != null)
+                        {
+                            ui.ShowResUI(true);
+                        }
+                        ui.ShowActionButtonsUI(true);
                         do
                         {
                             //wait for player to give order
