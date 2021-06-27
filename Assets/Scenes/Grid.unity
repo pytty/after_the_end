@@ -15471,6 +15471,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996870467}
   m_CullTransparentMesh: 0
+--- !u!1 &1002165421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1002165422}
+  m_Layer: 5
+  m_Name: Portrait Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1002165422
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002165421}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1423890361}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -359.99997, y: 0}
+  m_SizeDelta: {x: 80, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1007855413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20744,6 +20779,10 @@ MonoBehaviour:
   - {fileID: 1216400923}
   - {fileID: 1939897749}
   - {fileID: 1465362342}
+  iniOrdUI: {fileID: 1423890360}
+  iniOrdPortrait: {fileID: 5770346853914674203, guid: c688ae1b8f367684a857c8279d7951ca, type: 3}
+  iniOrdPortraitPosition: {fileID: 1002165422}
+  iniOrdPortraitDistance: {x: 80, y: 0, z: 0}
   actionButtonsUI: {fileID: 21027633}
   actionReadyButton: {fileID: 1803436980}
   roundFrameTickText: {fileID: 1074264630}
@@ -20834,6 +20873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battle:
     state: 0
+    heroes: []
     maxNumOfRounds: 0
     numOfTicks: 4
     numOfFrames: 3
@@ -21303,7 +21343,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1002165422}
   m_Father: {fileID: 728969850}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

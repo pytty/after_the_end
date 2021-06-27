@@ -23,4 +23,11 @@ public static class GameRules
             {56, "Very fast" },
             {63, "Super-fast" }
         };
+
+    public static Dictionary<int, Color> teamColors =
+        new Dictionary<int, Color>()
+        {
+            { 1, Color.blue },
+            { 2, Color.red }
+        };
 }

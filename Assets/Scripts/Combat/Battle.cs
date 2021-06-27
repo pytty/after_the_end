@@ -8,6 +8,8 @@ using UnityEngine;
     public enum State { Prep, Wait, Ready, SetPool, SetRes, GiveOrd, ExecOrd, Over }
     public State state = State.Prep;
 
+    public List<Hero> heroes = new List<Hero>();
+
     public int maxNumOfRounds;
     public int numOfTicks = 4; //TO DO: const
     public int numOfFrames = 3; //TO DO: const

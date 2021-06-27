@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -26,6 +27,11 @@ public class UIManager : MonoBehaviour
     private int resIndex;
     public GameObject resUI;
     public List<Transform> resInResUI = new List<Transform>();
+    public GameObject iniOrdUI;
+    public GameObject iniOrdPortrait;
+    public RectTransform iniOrdPortraitPosition;
+    public Vector3 iniOrdPortraitDistance;
+
     public GameObject actionButtonsUI;
     public GameObject actionReadyButton;
 
@@ -115,7 +121,9 @@ public class UIManager : MonoBehaviour
         if (newHeroLevel <= 0 || newHeroLevel > pylly.maxLevel)
             newHeroLevel = 1;
 
-        sheet.hero = generator.CreateNewHero(newHeroName, newHeroBackground, newHeroLevel, newHeroGenes, newHeroTeam);
+        Hero newHero = generator.CreateNewHero(newHeroName, newHeroBackground, newHeroLevel, newHeroGenes, newHeroTeam);
+        battleManager.battle.heroes.Add(newHero);
+        sheet.hero = newHero;
         sheet.ViewCharacterSheet();
     }
 
@@ -451,6 +459,24 @@ public class UIManager : MonoBehaviour
                     throw new System.Exception("I AM ERROR.");
                 }
             }
+        }
+    }
+
+    public void ShowIniOrdUI(bool yes)
+    {
+        iniOrdUI.SetActive(yes);
+    }
+
+    public void RefreshIniOrdUI(BattleTick tick)
+    {
+        tick.ComputeInitiativeOrder();
+        for (int i = 0; i < tick.initiativeOrder.Count; i++)
+        {
+            GameObject newPortrait = Instantiate(iniOrdPortrait, iniOrdUI.transform) as GameObject;
+            newPortrait.GetComponent<RectTransform>().anchoredPosition = iniOrdPortraitPosition.GetComponent<RectTransform>().anchoredPosition + (Vector2)(i * iniOrdPortraitDistance);
+            newPortrait.GetComponent<Image>().color = GameRules.teamColors[tick.initiativeOrder[i].team];
+            newPortrait.transform.Find("HeroName").GetComponent<TMP_Text>().text = tick.initiativeOrder[i].name;
+            newPortrait.transform.Find("Initiative").GetComponent<TMP_Text>().text = tick.initiativeOrder[i].CalculateInitiative().ToString();
         }
     }
 

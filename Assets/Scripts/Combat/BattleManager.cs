@@ -43,6 +43,7 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(BattleSystem());
     }
 
+
     private IEnumerator BattleSystem()
     {
         //BEFORE BATTLE
@@ -74,6 +75,7 @@ public class BattleManager : MonoBehaviour
             battle.state = Battle.State.Wait;
             battle.rounds.Add(new BattleRound());
             thisRound = battle.rounds[battle.roundIndex];
+            thisRound.battle = battle;
 
             do
             {
@@ -81,6 +83,7 @@ public class BattleManager : MonoBehaviour
                 battle.state = Battle.State.Wait;
                 thisRound.frames.Add(new BattleFrame());
                 thisFrame = thisRound.frames[thisRound.frameIndex];
+                thisFrame.round = thisRound;
 
                 //set resources for each character, 0-4/remaining APs
                 battle.state = Battle.State.SetRes;
@@ -106,7 +109,13 @@ public class BattleManager : MonoBehaviour
                     battle.state = Battle.State.Wait;
                     thisFrame.ticks.Add(new BattleTick());
                     thisTick = thisFrame.ticks[thisFrame.tickIndex];
+                    thisTick.frame = thisFrame;
+
                     //compute initiative order
+                    thisTick.ComputeInitiativeOrder();
+                    ui.ShowIniOrdUI(true);
+                    ui.RefreshIniOrdUI(thisTick);
+
                     //characters get turns in initiative order
                     do
                     {
@@ -114,6 +123,8 @@ public class BattleManager : MonoBehaviour
                         battle.state = Battle.State.Wait;
                         thisTick.turns.Add(new BattleTurn());
                         thisTurn = thisTick.turns[thisTick.turnIndex];
+                        thisTurn.tick = thisTick;
+
                         //character can execute 1 action on his/her turn by selecting a resource
                         battle.state = Battle.State.GiveOrd;
                         if (ui.selectedHero != null && selector.selectedGameObject != null && selector.selectedGameObject.GetComponent<Piece>().hero != null)

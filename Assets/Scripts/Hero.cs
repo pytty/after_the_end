@@ -87,6 +87,28 @@ using UnityEngine;
         resources.Clear();
     }
 
+    public int CalculateInitiative()
+    { 
+        int val = 0;
+        val += (int)Mathf.Round(combatSpeed);
+        foreach (Resource r in resources)
+        {
+            if (!r.used)
+            {
+                if (r is FP)
+                {
+                    val += GameRules.initiativeStatBonuses[(r as FP).stat];
+                }
+                else if (r is SpecialResource)
+                {
+                    if ((r as SpecialResource).type == SpecialResource.SpecialResourceType.MOVE)
+                        val += movementInitiativeBonus;
+                }
+            }
+        }
+        return val;
+    }
+
     public void GenerateHero(Genes genes)
     {
         //TO DO: tee tästä update tyyppinen versio ja tsekkaa että alifunktiot toimii myös updatevana (ettei tule esim duplikaatteja)

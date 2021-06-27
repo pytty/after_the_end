@@ -156,6 +156,7 @@ public class ObjectSelector : MonoBehaviour
         GameObject temp = selectedGameObject;
         if (temp.GetComponent<Piece>() != null)
         {
+            battleManager.battle.heroes.Remove(temp.GetComponent<Piece>().hero);
             DeselectObject();
             Destroy(temp);
         }
