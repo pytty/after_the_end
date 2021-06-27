@@ -14,19 +14,15 @@ public class BattleTick
 
     public void ComputeInitiativeOrder()
     {
-        List<int> FindOrderBiggestToSmallestBasedOn(List<Hero> heroes, List<int> attributes)
+        List<int> FindOrderBiggestToSmallestBasedOn(List<int> attributes)
         {
-            if (heroes.Count != attributes.Count)
-                throw new System.Exception("I AM ERROR.");
-
-
             List<int> candIndices = new List<int>();
             List<int> finalList = new List<int>();
-            while (finalList.Count < heroes.Count)
+            while (finalList.Count < attributes.Count)
             {
                 int bV = -99999;
                 candIndices.Clear();
-                for (int i = 0; i < heroes.Count; i++)
+                for (int i = 0; i < attributes.Count; i++)
                 {
 
                     if (!finalList.Contains(i))
@@ -46,7 +42,6 @@ public class BattleTick
                 //add to list
                 foreach (int x in candIndices) finalList.Add(x);
             }
-            foreach (int x in finalList )Debug.Log(x);
             return finalList;
         }
 
@@ -60,7 +55,7 @@ public class BattleTick
             initiatives.Add(h.CalculateInitiative());
         }
 
-        List<int> order = FindOrderBiggestToSmallestBasedOn(frame.round.battle.heroes, initiatives);
+        List<int> order = FindOrderBiggestToSmallestBasedOn(initiatives);
         //TO DO: ties
         //compare combat speeds
         //compare AGIs
